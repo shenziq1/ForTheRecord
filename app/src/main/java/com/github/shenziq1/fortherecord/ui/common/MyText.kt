@@ -11,10 +11,10 @@ import androidx.compose.ui.unit.sp
 
 
 @Composable
-fun TestText(text: String) {
+fun TestText(text: String, modifier: Modifier = Modifier) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         Text(text = text, fontSize = 48.sp)
     }

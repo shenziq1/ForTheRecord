@@ -1,5 +1,6 @@
 package com.github.shenziq1.fortherecord.ui.main
 
+import android.content.Context
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Scaffold
@@ -8,12 +9,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.github.shenziq1.fortherecord.ui.common.TestText
-import com.github.shenziq1.fortherecord.ui.components.routine.RoutineScreen
+import com.github.shenziq1.fortherecord.database.TaskDatabase
+import com.github.shenziq1.fortherecord.repository.FakeRepository
+import com.github.shenziq1.fortherecord.repository.OfflineRepository
+import com.github.shenziq1.fortherecord.ui.components.routine.RoutineDetailScreen
+import com.github.shenziq1.fortherecord.ui.components.routine.RoutineListScreen
 import com.github.shenziq1.fortherecord.ui.components.setting.SettingScreen
 import com.github.shenziq1.fortherecord.ui.components.statictics.StatisticsScreen
 import com.github.shenziq1.fortherecord.ui.components.today.TodayScreen
@@ -24,14 +30,18 @@ fun MainScreen(navHostController: NavHostController) {
         NavHost(navController = navHostController, startDestination = "Routine"){
             navigation(startDestination = "RoutineHome", route = "Routine"){
                 composable("RoutineHome"){
-                    RoutineScreen(navHostController = navHostController)
+                    RoutineListScreen(navHostController = navHostController)
+                }
+                composable(route = "RoutineDetail/{taskId}", arguments = listOf(navArgument("taskId"){
+                    type = NavType.IntType
+                })){
+                    RoutineDetailScreen(id = (it.arguments?.getInt("taskId") ?: 0), navHostController = navHostController)
                 }
             }
             navigation(startDestination = "TodayHome", route = "Today"){
                 composable("TodayHome"){
                     TodayScreen(navHostController = navHostController)
                 }
-
             }
             navigation(startDestination = "StatisticsHome", route = "Statistics"){
                 composable("StatisticsHome"){

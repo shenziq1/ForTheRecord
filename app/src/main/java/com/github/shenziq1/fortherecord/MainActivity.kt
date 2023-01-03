@@ -1,5 +1,6 @@
 package com.github.shenziq1.fortherecord
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,7 +10,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.github.shenziq1.fortherecord.ui.main.MainScreen
 import com.github.shenziq1.fortherecord.ui.theme.ForTheRecordTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     lateinit var navHostController: NavHostController
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +20,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             ForTheRecordTheme {
                 navHostController = rememberNavController()
-                // A surface container using the 'background' color from the theme
                 MainScreen(navHostController)
             }
         }
