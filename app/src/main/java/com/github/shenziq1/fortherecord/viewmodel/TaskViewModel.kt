@@ -40,4 +40,20 @@ class TaskViewModel @Inject constructor(private val offlineRepository: OfflineRe
             }
         }
     }
+
+    fun getTask(taskId: Int){
+        viewModelScope.launch {
+            try {
+                taskUiState = TaskUiState.SuccessTask(listOf(offlineRepository.getTask(taskId)))
+            } catch (
+                e: IOException
+            ){
+                TaskUiState.Error
+            }
+        }
+    }
+
+    private fun updateTask(taskId: Int){
+
+    }
 }

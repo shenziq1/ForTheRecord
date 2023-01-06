@@ -1,7 +1,10 @@
 package com.github.shenziq1.fortherecord.ui.common
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,6 +20,20 @@ fun TestText(text: String, modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxSize()
     ) {
         Text(text = text, fontSize = 48.sp)
+    }
+}
+
+@Composable
+fun TestText2(text: String, buttonText: String, onClick: ()->Unit, modifier: Modifier = Modifier) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.SpaceEvenly,
+        modifier = modifier.fillMaxSize()
+    ) {
+        Text(text = text, fontSize = 48.sp)
+        Button(onClick = onClick) {
+            Text(text = buttonText)
+        }
     }
 }
 
