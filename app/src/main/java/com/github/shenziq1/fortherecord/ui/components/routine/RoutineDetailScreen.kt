@@ -7,7 +7,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.github.shenziq1.fortherecord.model.Task
+import com.github.shenziq1.fortherecord.database.Task
+
 import com.github.shenziq1.fortherecord.ui.common.TestText2
 import com.github.shenziq1.fortherecord.viewmodel.TaskUiState
 import com.github.shenziq1.fortherecord.viewmodel.TaskViewModel
@@ -18,38 +19,38 @@ fun RoutineDetailScreen(
     navHostController: NavHostController,
     viewModel: TaskViewModel = hiltViewModel()
 ) {
-    viewModel.getTask(id)
-    when (viewModel.taskUiState) {
-        is TaskUiState.SuccessTask -> {
-
-
-            val task = (viewModel.taskUiState as TaskUiState.SuccessTask).tasks[0]
-            var taskName by remember { mutableStateOf(task.name) }
-            task.apply {
-                TestTaskDetail(
-                    task = Task(this.id, taskName),
-                    navHostController = navHostController,
-                    onClick = {taskName+='a'}
-                )
-                Log.d("list item", "${this.id}")
-
-
-            }
-        }
-        is TaskUiState.Error -> Text(text = "error")
-        is TaskUiState.Loading -> Text(text = "loading")
-    }
-
-}
-
-@Composable
-fun TestTaskDetail(task: Task, navHostController: NavHostController, onClick: () -> Unit) {
-
-    TestText2(
-        text = task.name,
-        buttonText = "Add a",
-        onClick = onClick,
-        modifier = Modifier.clickable { navHostController.popBackStack() })
-
-
+//    viewModel.getTask(id)
+//    when (viewModel.taskUiState) {
+//        is TaskUiState.SuccessTask -> {
+//
+//
+//            val task = (viewModel.taskUiState as TaskUiState.SuccessTask).tasks[0]
+//            var taskName by remember { mutableStateOf(task.name) }
+//            task.apply {
+//                TestTaskDetail(
+//                    task = Task(this.id, taskName),
+//                    navHostController = navHostController,
+//                    onClick = {taskName+='a'}
+//                )
+//                Log.d("list item", "${this.id}")
+//
+//
+//            }
+//        }
+//        is TaskUiState.Error -> Text(text = "error")
+//        is TaskUiState.Loading -> Text(text = "loading")
+//    }
+//
+//}
+//
+//@Composable
+//fun TestTaskDetail(task: Task, navHostController: NavHostController, onClick: () -> Unit) {
+//
+//    TestText2(
+//        text = task.name,
+//        buttonText = "Add a",
+//        onClick = onClick,
+//        modifier = Modifier.clickable { navHostController.popBackStack() })
+//
+//
 }

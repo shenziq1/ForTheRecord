@@ -2,24 +2,21 @@ package com.github.shenziq1.fortherecord.repository
 
 import com.github.shenziq1.fortherecord.database.FakeTask
 import com.github.shenziq1.fortherecord.database.TaskDao
-import com.github.shenziq1.fortherecord.database.TaskEntity
-import com.github.shenziq1.fortherecord.database.entityToTask
-import com.github.shenziq1.fortherecord.model.Task
-import com.github.shenziq1.fortherecord.util.TaskToEntityMapper
+import com.github.shenziq1.fortherecord.database.Task
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
 interface Repository {
-    fun getAll(): Flow<List<Task>>
+    fun getAllTasks(): Flow<List<Task>>
     fun getTask(taskId: Int): Flow<Task>
-    suspend fun insert(taskEntity: TaskEntity)
-    suspend fun delete(taskEntity: TaskEntity)
-    suspend fun update(taskEntity: TaskEntity)
+    suspend fun insert(task: Task)
+    suspend fun delete(task: Task)
+    suspend fun update(task: Task)
 
 }
 
 class FakeRepository(): Repository{
-    override fun getAll(): Flow<List<Task>> {
+    override fun getAllTasks(): Flow<List<Task>> {
         return flowOf(FakeTask.task)
     }
 
@@ -27,30 +24,28 @@ class FakeRepository(): Repository{
         return flowOf(FakeTask.task[taskId-1])
     }
 
-    override suspend fun insert(taskEntity: TaskEntity) {
-        FakeTask.task.add(taskEntity.entityToTask())
+    override suspend fun insert(task: Task) {
+        FakeTask.task.add(task)
     }
 
-    override suspend fun delete(taskEntity: TaskEntity) {
-        FakeTask.task.remove(taskEntity.entityToTask())
+    override suspend fun delete(task: Task) {
+        FakeTask.task.remove(task)
     }
 
-    override suspend fun update(taskEntity: TaskEntity) {
+    override suspend fun update(task: Task) {
         for (item in FakeTask.task){
-            if (item.id == taskEntity.id){
+            if (item.id == task.id){
                 FakeTask.task.remove(item)
-                FakeTask.task.add(taskEntity.entityToTask())
+                FakeTask.task.add(task)
             }
         }
     }
 }
 
 class OfflineRepository(val taskDao: TaskDao): Repository{
-    override fun getAll(): Flow<List<Task>> {
-        TODO("Not yet implemented")
+    override fun getAllTasks(): Flow<List<Task>> {
+        return taskDao.getAll()
     }
-
-
 
 //    (): List<Task> {
 //        val taskEntity = FakeTask.task.map { TaskToEntityMapper.taskToEntityMapper.DtoE(it) }
@@ -62,16 +57,16 @@ class OfflineRepository(val taskDao: TaskDao): Repository{
         return taskDao.getTask(taskId)
     }
 
-    override suspend fun insert(taskEntity: TaskEntity) {
-        TODO("Not yet implemented")
+    override suspend fun insert(task: Task) {
+        taskDao.insert(task)
     }
 
-    override suspend fun delete(taskEntity: TaskEntity) {
-        TODO("Not yet implemented")
+    override suspend fun delete(task: Task) {
+        taskDao.delete(task)
     }
 
-    override suspend fun update(taskEntity: TaskEntity) {
-        TODO("Not yet implemented")
+    override suspend fun update(task: Task) {
+        taskDao.update(task)
     }
 
 }

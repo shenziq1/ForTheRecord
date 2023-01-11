@@ -10,7 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.github.shenziq1.fortherecord.model.Task
+import com.github.shenziq1.fortherecord.database.Task
+
 import com.github.shenziq1.fortherecord.ui.theme.Teal200
 
 @OptIn(ExperimentalMaterialApi::class)

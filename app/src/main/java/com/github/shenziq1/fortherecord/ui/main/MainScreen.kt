@@ -20,6 +20,7 @@ import com.github.shenziq1.fortherecord.repository.FakeRepository
 import com.github.shenziq1.fortherecord.repository.OfflineRepository
 import com.github.shenziq1.fortherecord.ui.components.routine.RoutineDetailScreen
 import com.github.shenziq1.fortherecord.ui.components.routine.RoutineListScreen
+import com.github.shenziq1.fortherecord.ui.components.routine.RoutineNewScreen
 import com.github.shenziq1.fortherecord.ui.components.setting.SettingScreen
 import com.github.shenziq1.fortherecord.ui.components.statictics.StatisticsScreen
 import com.github.shenziq1.fortherecord.ui.components.today.TodayScreen
@@ -31,6 +32,9 @@ fun MainScreen(navHostController: NavHostController) {
             navigation(startDestination = "RoutineHome", route = "Routine"){
                 composable("RoutineHome"){
                     RoutineListScreen(navHostController = navHostController)
+                }
+                composable("RoutineNew"){
+                    RoutineNewScreen(navHostController = navHostController)
                 }
                 composable(route = "RoutineDetail/{taskId}", arguments = listOf(navArgument("taskId"){
                     type = NavType.IntType

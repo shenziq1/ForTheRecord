@@ -6,7 +6,7 @@ import com.github.shenziq1.fortherecord.database.FakeTask
 import com.github.shenziq1.fortherecord.database.TaskDao
 import com.github.shenziq1.fortherecord.database.TaskDatabase
 import com.github.shenziq1.fortherecord.repository.OfflineRepository
-import com.github.shenziq1.fortherecord.util.TaskToEntityMapper
+
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

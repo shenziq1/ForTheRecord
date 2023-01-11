@@ -1,6 +1,6 @@
 package com.github.shenziq1.fortherecord.database
 
-import com.github.shenziq1.fortherecord.model.Task
+import com.github.shenziq1.fortherecord.database.Task
 
 object FakeTask{
     var task = mutableListOf<Task>(
