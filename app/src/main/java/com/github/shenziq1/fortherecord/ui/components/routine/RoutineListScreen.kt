@@ -58,7 +58,13 @@ fun RoutineListScreen(
         val taskList = taskListUiState.taskList
         when (taskList.size){
             0 -> Text(text = "no content")
-            else -> TaskCard(task = Task(taskList[0].id, taskList[0].name), navHostController = navHostController)
+            
+//            else -> TaskCard(task = Task(taskList[0].id, taskList[0].name), navHostController = navHostController)
+            else -> Column() {
+                taskList.forEach { task ->
+                    TaskCard(task = Task(task.id, task.name), navHostController =navHostController)
+                }
+            }
 
         }
         //TaskCard(task = Task(0, "test"), navHostController = navHostController)

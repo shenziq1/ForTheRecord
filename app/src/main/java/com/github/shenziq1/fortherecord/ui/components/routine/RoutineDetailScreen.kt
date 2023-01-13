@@ -1,56 +1,76 @@
 package com.github.shenziq1.fortherecord.ui.components.routine
 
-import android.util.Log
-import androidx.compose.foundation.clickable
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.github.shenziq1.fortherecord.database.Task
-
-import com.github.shenziq1.fortherecord.ui.common.TestText2
+import com.github.shenziq1.fortherecord.ui.common.TopBackBar
+import com.github.shenziq1.fortherecord.ui.theme.Blue500
+import com.github.shenziq1.fortherecord.ui.theme.Blue700
 import com.github.shenziq1.fortherecord.viewmodel.TaskUiState
 import com.github.shenziq1.fortherecord.viewmodel.TaskViewModel
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RoutineDetailScreen(
     id: Int,
     navHostController: NavHostController,
     viewModel: TaskViewModel = hiltViewModel()
 ) {
-//    viewModel.getTask(id)
-//    when (viewModel.taskUiState) {
-//        is TaskUiState.SuccessTask -> {
-//
-//
-//            val task = (viewModel.taskUiState as TaskUiState.SuccessTask).tasks[0]
-//            var taskName by remember { mutableStateOf(task.name) }
-//            task.apply {
-//                TestTaskDetail(
-//                    task = Task(this.id, taskName),
-//                    navHostController = navHostController,
-//                    onClick = {taskName+='a'}
-//                )
-//                Log.d("list item", "${this.id}")
-//
-//
-//            }
-//        }
-//        is TaskUiState.Error -> Text(text = "error")
-//        is TaskUiState.Loading -> Text(text = "loading")
-//    }
-//
-//}
-//
-//@Composable
-//fun TestTaskDetail(task: Task, navHostController: NavHostController, onClick: () -> Unit) {
-//
-//    TestText2(
-//        text = task.name,
-//        buttonText = "Add a",
-//        onClick = onClick,
-//        modifier = Modifier.clickable { navHostController.popBackStack() })
-//
-//
+    val focusManager = LocalFocusManager.current
+    val coroutineScope = rememberCoroutineScope()
+    val keyboardController = LocalSoftwareKeyboardController.current
+    var name by remember { mutableStateOf(viewModel.taskUiState.name) }
+    Scaffold(topBar = { TopBackBar(navHostController = navHostController) }) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            OutlinedTextField(
+                value = name,
+                label = { Text(text = "name") },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Ascii,
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        keyboardController?.hide()
+                    }),
+                onValueChange = {
+                    name = it
+                    coroutineScope.launch {
+                        viewModel.updateUiState(TaskUiState(id = id, name = it))
+                    }
+                },
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Blue700,
+                    unfocusedBorderColor = Blue500
+                )
+            )
+            Spacer(modifier = Modifier.height(40.dp))
+            Button(onClick = {
+                //focusManager.moveFocus(FocusDirection.Down)
+                coroutineScope.launch {
+                    viewModel.saveEditedTask()
+                }
+            }) {
+                Text(text = "save")
+            }
+        }
+
+    }
 }

@@ -1,17 +1,14 @@
 package com.github.shenziq1.fortherecord.viewmodel
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.github.shenziq1.fortherecord.database.Task
 
 import com.github.shenziq1.fortherecord.repository.OfflineRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
-import java.io.IOException
 import javax.inject.Inject
 
 data class TaskUiState(
@@ -32,7 +29,21 @@ class TaskViewModel @Inject constructor(private val offlineRepository: OfflineRe
         taskUiState = newTaskUiState.copy()
     }
 
-    suspend fun saveTask(){
-        offlineRepository.insert(taskUiState.toTask())
+    suspend fun saveEditedTask(){
+        if (taskUiState.isValid()){
+            offlineRepository.update(taskUiState.toTask())
+            Log.d("update", taskUiState.toTask().name)
+        }
     }
+
+    suspend fun saveNewTask(){
+        if (taskUiState.isValid()){
+            offlineRepository.insert(taskUiState.toTask())
+            Log.d("insert", taskUiState.toTask().name)
+        }
+    }
+}
+
+fun TaskUiState.isValid(): Boolean{
+    return name.isNotBlank()
 }
