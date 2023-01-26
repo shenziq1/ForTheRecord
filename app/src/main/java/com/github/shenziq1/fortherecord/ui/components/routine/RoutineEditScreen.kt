@@ -1,5 +1,6 @@
 package com.github.shenziq1.fortherecord.ui.components.routine
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
@@ -44,11 +45,9 @@ fun RoutineEditScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = name, color = Color.Black)
-            Text(text = "Above should be a ")
+            Text(text = "Let's change name to ")
             OutlinedTextField(
                 value = name,
-                label = { Text(text = "name") },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Ascii,
                     imeAction = ImeAction.Done
