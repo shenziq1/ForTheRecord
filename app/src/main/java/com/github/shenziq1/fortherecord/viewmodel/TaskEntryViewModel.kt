@@ -24,6 +24,10 @@ fun TaskUiState.toTask(): Task {
     return Task(id = id, name = name)
 }
 
+fun Task.toTaskUiState(): TaskUiState {
+    return TaskUiState(id = id, name = name)
+}
+
 @HiltViewModel
 class TaskEntryViewModel @Inject constructor(
     private val offlineRepository: OfflineRepository,

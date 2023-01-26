@@ -35,7 +35,8 @@ fun RoutineEditScreen(
     val coroutineScope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
     Log.d("viewmodel2", viewModel.taskUiState.name)
-    var name by remember { mutableStateOf(viewModel.taskUiState.name) }
+    Log.d("viewmodel2", viewModel.taskUiState.id.toString())
+    var name = viewModel.taskUiState.name
 
     Scaffold(topBar = { TopBackBar(navHostController = navHostController) }) {
         Column(

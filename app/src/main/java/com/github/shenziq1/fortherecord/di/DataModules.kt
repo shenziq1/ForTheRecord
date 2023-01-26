@@ -38,10 +38,3 @@ object RepositoryModule{
         ).build()
     }
 }
-
-object DataSourceModule{
-
-}
-object DatabaseModule{
-
-}

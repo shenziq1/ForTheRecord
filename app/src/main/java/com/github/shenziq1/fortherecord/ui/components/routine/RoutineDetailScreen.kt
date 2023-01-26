@@ -23,17 +23,18 @@ import kotlinx.coroutines.launch
 fun RoutineDetailScreen(
     id: Int,
     navHostController: NavHostController,
-    viewModel: TaskEntryViewModel = hiltViewModel()
+    viewModel: TaskDetailViewModel = hiltViewModel()
 ) {
     val focusManager = LocalFocusManager.current
     val coroutineScope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
-    Log.d("viewmodel2", viewModel.taskUiState.name)
+    val taskUiState = viewModel.taskUiState.collectAsState()
+    Log.d("viewmodel2", taskUiState.value.name)
 
 //    coroutineScope.launch {
 //        viewModel.getUiState(id)
 //    }
-    var name by remember { mutableStateOf(viewModel.taskUiState.name) }
+    val name = taskUiState.value.name
     Scaffold(topBar = { TopBackBar(navHostController = navHostController) }) {
         Column(
             modifier = Modifier.fillMaxSize(),
