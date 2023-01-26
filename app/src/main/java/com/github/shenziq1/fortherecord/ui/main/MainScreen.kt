@@ -1,6 +1,5 @@
 package com.github.shenziq1.fortherecord.ui.main
 
-import android.content.Context
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Scaffold
@@ -15,10 +14,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.github.shenziq1.fortherecord.database.TaskDatabase
-import com.github.shenziq1.fortherecord.repository.FakeRepository
-import com.github.shenziq1.fortherecord.repository.OfflineRepository
 import com.github.shenziq1.fortherecord.ui.components.routine.RoutineDetailScreen
+import com.github.shenziq1.fortherecord.ui.components.routine.RoutineEditScreen
 import com.github.shenziq1.fortherecord.ui.components.routine.RoutineListScreen
 import com.github.shenziq1.fortherecord.ui.components.routine.RoutineNewScreen
 import com.github.shenziq1.fortherecord.ui.components.setting.SettingScreen
@@ -41,6 +38,12 @@ fun MainScreen(navHostController: NavHostController) {
                 })){
                     RoutineDetailScreen(id = (it.arguments?.getInt("taskId") ?: 0), navHostController = navHostController)
                 }
+                composable(route = "RoutineEdit/{taskId}", arguments = listOf(navArgument("taskId"){
+                    type = NavType.IntType
+                })){
+                    RoutineEditScreen(id = (it.arguments?.getInt("taskId") ?: 0), navHostController = navHostController)
+                }
+
             }
             navigation(startDestination = "TodayHome", route = "Today"){
                 composable("TodayHome"){

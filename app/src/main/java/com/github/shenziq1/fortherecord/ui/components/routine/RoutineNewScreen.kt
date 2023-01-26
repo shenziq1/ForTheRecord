@@ -18,14 +18,14 @@ import com.github.shenziq1.fortherecord.ui.common.TopBackBar
 import com.github.shenziq1.fortherecord.ui.theme.Blue500
 import com.github.shenziq1.fortherecord.ui.theme.Blue700
 import com.github.shenziq1.fortherecord.viewmodel.TaskUiState
-import com.github.shenziq1.fortherecord.viewmodel.TaskViewModel
+import com.github.shenziq1.fortherecord.viewmodel.TaskEntryViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RoutineNewScreen(
     navHostController: NavHostController,
-    viewModel: TaskViewModel = hiltViewModel()
+    viewModel: TaskEntryViewModel = hiltViewModel()
 ) {
     val coroutineScope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -66,6 +66,7 @@ fun RoutineNewScreen(
             Button(onClick = {
                 coroutineScope.launch {
                     viewModel.saveNewTask()
+                    navHostController.popBackStack()
                 }
             }) {
                 Text(text = "save")
