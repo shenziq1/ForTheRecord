@@ -12,6 +12,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.github.shenziq1.fortherecord.ui.common.TestText
 import com.github.shenziq1.fortherecord.ui.common.TopBackBar
 import com.github.shenziq1.fortherecord.viewmodel.TaskDetailViewModel
 import kotlinx.coroutines.launch
@@ -40,43 +41,19 @@ fun TaskDetailScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = name, color = Color.Black)
-//            OutlinedTextField(
-//                value = name,
-//                label = { Text(text = "name") },
-//                keyboardOptions = KeyboardOptions(
-//                    keyboardType = KeyboardType.Ascii,
-//                    imeAction = ImeAction.Done
-//                ),
-//                keyboardActions = KeyboardActions(
-//                    onDone = {
-//                        keyboardController?.hide()
-//                    }),
-//                onValueChange = {
-//                    name = it
-//                    coroutineScope.launch {
-//                        viewModel.updateUiState(TaskUiState(id = id, name = it))
-//                    }
-//                },
-//                colors = TextFieldDefaults.outlinedTextFieldColors(
-//                    focusedBorderColor = Blue700,
-//                    unfocusedBorderColor = Blue500
-//                )
-//            )
-//            Spacer(modifier = Modifier.height(40.dp))
-
-            Button(onClick = {
-                //focusManager.moveFocus(FocusDirection.Down)
-                navHostController.navigate("TaskEdit/${id}")
-            }) {
-                Text(text = "edit")
-            }
-            Button(onClick = { coroutineScope.launch {
-                viewModel.deleteTask()
-                navHostController.popBackStack()
-            } }) {
-                Text(text = "delete")
-            }
+            TestText(text = name)
+//            Button(onClick = {
+//                //focusManager.moveFocus(FocusDirection.Down)
+//                navHostController.navigate("TaskEdit/${id}")
+//            }) {
+//                Text(text = "edit")
+//            }
+//            Button(onClick = { coroutineScope.launch {
+//                viewModel.deleteTask()
+//                navHostController.popBackStack()
+//            } }) {
+//                Text(text = "delete")
+//            }
         }
 
     }

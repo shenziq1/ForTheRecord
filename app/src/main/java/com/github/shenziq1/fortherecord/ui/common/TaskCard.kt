@@ -1,54 +1,22 @@
 package com.github.shenziq1.fortherecord.ui.common
 
-import android.annotation.SuppressLint
 import android.util.Log
-import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.database.Task
-import com.github.shenziq1.fortherecord.ui.theme.Blue200
 import com.github.shenziq1.fortherecord.ui.theme.Teal200
 import com.github.shenziq1.fortherecord.viewmodel.TaskListViewModel
 import kotlinx.coroutines.launch
-import kotlin.math.roundToInt
 
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun TaskCard(
-    task: Task,
-    navHostController: NavHostController,
-) {
-    val route = "TaskDetail/${task.id}"
-
-    Card(
-        onClick = { navHostController.navigate(route) },
-        backgroundColor = Teal200,
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(80.dp),
-    ) {
-        Column(
-            modifier = Modifier.fillMaxHeight(),
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(text = task.name, modifier = Modifier.padding(20.dp, 0.dp))
-        }
-    }
-}
-
-@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SwipableTaskCard(
@@ -57,14 +25,11 @@ fun SwipableTaskCard(
     viewModel: TaskListViewModel = hiltViewModel()
 ) {
     val coroutineScope = rememberCoroutineScope()
-//    coroutineScope.launch {
-//        Log.d("viewmodel77", viewModel.taskListUiState.value.taskList.first().name)
-//    }
     val currentTask by rememberUpdatedState(newValue = task)
+    val route = "TaskDetail/${currentTask.id}"
 
     SwipeToDismiss(
         modifier = Modifier,
-//        state = rememberDismissState(),
         state = rememberDismissState(
             initialValue = DismissValue.Default,
             confirmStateChange = {
@@ -76,7 +41,7 @@ fun SwipableTaskCard(
                         Log.d("viewmodel9", "I should be dismissed")
                     }
                     DismissValue.DismissedToStart -> {
-                        navHostController.navigate("TaskEdit/${task.id}")
+                        navHostController.navigate("TaskEdit/${currentTask.id}")
                         Log.d("viewmodel9", "I am at edit now")
                     }
                     else -> {}
@@ -90,11 +55,31 @@ fun SwipableTaskCard(
                 DismissDirection.StartToEnd -> FractionalThreshold(0.5f)
                 else -> FractionalThreshold(1f)
             }
-         },
+        },
         background = {
         }
     ) {
-        TaskCard(task = task, navHostController = navHostController)
-        Log.d("where", task.name)
+        Card(
+            onClick = {
+                navHostController.navigate(route)
+                coroutineScope.launch {
+                    viewModel.updateTask(currentTask.copy(clickTimes = currentTask.clickTimes + 1))
+                }
+            },
+            backgroundColor = Teal200,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(80.dp),
+        ) {
+            Row(
+                modifier = Modifier,
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = currentTask.name, modifier = Modifier.padding(20.dp, 0.dp))
+                Text(text = currentTask.clickTimes.toString(), modifier = Modifier.padding(20.dp, 0.dp))
+            }
+        }
+        Log.d("where", currentTask.name)
     }
 }

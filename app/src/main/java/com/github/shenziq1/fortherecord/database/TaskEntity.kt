@@ -9,6 +9,12 @@ data class Task(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     //@ColumnInfo
-    val name: String
+    val name: String,
+    val category: String,
+    val timeSpent: Int,
+    val timeGoal: Int,
+    val clickTimes: Int,
+    val startingTime: Int,
+    val endingTime: Int
 
 )

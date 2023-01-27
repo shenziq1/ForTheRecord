@@ -27,4 +27,8 @@ class TaskListViewModel @Inject constructor(private val offlineRepository: Offli
     suspend fun deleteTask(task: Task){
         offlineRepository.delete(task)
     }
+
+    suspend fun updateTask(task: Task){
+        offlineRepository.update(task)
+    }
 }

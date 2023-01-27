@@ -57,7 +57,7 @@ fun TaskListScreen(
             0 -> Text(text = "no content")
             else -> LazyColumn() {
                 items(items = taskList, key = {task -> task.id}) {
-                    task -> SwipableTaskCard(task = Task(task.id, task.name), navHostController =navHostController)
+                    task -> SwipableTaskCard(task = task, navHostController =navHostController)
                 }
             }
         }

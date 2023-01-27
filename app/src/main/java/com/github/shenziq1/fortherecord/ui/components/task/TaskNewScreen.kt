@@ -29,7 +29,7 @@ fun TaskNewScreen(
 ) {
     val coroutineScope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
-    var name by remember { mutableStateOf("") }
+    val taskUiState = viewModel.taskUiState
 
     Scaffold(
         topBar = {
@@ -41,7 +41,7 @@ fun TaskNewScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             OutlinedTextField(
-                value = name,
+                value = taskUiState.name,
                 singleLine = true,
                 label = { Text(text = "name") },
                 keyboardOptions = KeyboardOptions(
@@ -53,9 +53,8 @@ fun TaskNewScreen(
                         keyboardController?.hide()
                     }),
                 onValueChange = {
-                    name = it
                     coroutineScope.launch {
-                        viewModel.updateUiState(TaskUiState(name = it))
+                        viewModel.updateUiState(taskUiState.copy(name = it))
                     }
                 },
                 colors = TextFieldDefaults.outlinedTextFieldColors(

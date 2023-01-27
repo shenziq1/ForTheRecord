@@ -35,7 +35,7 @@ fun TaskEditScreen(
     val keyboardController = LocalSoftwareKeyboardController.current
     Log.d("viewmodel2", viewModel.taskUiState.name)
     Log.d("viewmodel2", viewModel.taskUiState.id.toString())
-    var name = viewModel.taskUiState.name
+    val taskUiState = viewModel.taskUiState
 
     Scaffold(topBar = { TopBackBar(navHostController = navHostController) }) {
         Column(
@@ -45,7 +45,7 @@ fun TaskEditScreen(
         ) {
             Text(text = "Let's change name to ")
             OutlinedTextField(
-                value = name,
+                value = taskUiState.name,
                 singleLine = true,
                 label = { Text(text = "name") },
                 keyboardOptions = KeyboardOptions(
@@ -57,9 +57,8 @@ fun TaskEditScreen(
                         keyboardController?.hide()
                     }),
                 onValueChange = {
-                    name = it
                     coroutineScope.launch {
-                        viewModel.updateUiState(TaskUiState(id = id, name = it))
+                        viewModel.updateUiState(taskUiState.copy(name = it))
                     }
                 },
                 colors = TextFieldDefaults.outlinedTextFieldColors(

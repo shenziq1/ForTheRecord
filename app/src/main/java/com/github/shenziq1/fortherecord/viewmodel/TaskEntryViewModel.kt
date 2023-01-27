@@ -15,19 +15,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class TaskUiState(
-    val id: Int = 0,
-    val name: String = ""
-)
-
-fun TaskUiState.toTask(): Task {
-    return Task(id = id, name = name)
-}
-
-fun Task.toTaskUiState(): TaskUiState {
-    return TaskUiState(id = id, name = name)
-}
-
 @HiltViewModel
 class TaskEntryViewModel @Inject constructor(
     private val offlineRepository: OfflineRepository,
@@ -42,8 +29,8 @@ class TaskEntryViewModel @Inject constructor(
     }
 
     private suspend fun getUiState(id: Int) {
-        val name = offlineRepository.getTask(id).filterNotNull().first().name
-        taskUiState = TaskUiState(id = id, name = name)
+        val task = offlineRepository.getTask(id).filterNotNull().first()
+        taskUiState = task.toTaskUiState()
 
     }
 
