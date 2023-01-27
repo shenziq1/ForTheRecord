@@ -76,10 +76,8 @@ fun SwipableTaskCard(
                         Log.d("viewmodel9", "I should be dismissed")
                     }
                     DismissValue.DismissedToStart -> {
-                        coroutineScope.launch {
-                            viewModel.deleteTask(currentTask)
-                        }
-                        Log.d("viewmodel9", "I should be dismissed")
+                        navHostController.navigate("RoutineEdit/${task.id}")
+                        Log.d("viewmodel9", "I am at edit now")
                     }
                     else -> {}
                 }
