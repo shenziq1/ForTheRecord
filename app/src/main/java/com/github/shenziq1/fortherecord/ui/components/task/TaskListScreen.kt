@@ -1,6 +1,5 @@
-package com.github.shenziq1.fortherecord.ui.components.routine
+package com.github.shenziq1.fortherecord.ui.components.task
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -16,12 +15,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.database.Task
 import com.github.shenziq1.fortherecord.ui.common.SwipableTaskCard
-import com.github.shenziq1.fortherecord.ui.common.TaskCard
 import com.github.shenziq1.fortherecord.ui.common.Title
 import com.github.shenziq1.fortherecord.viewmodel.TaskListViewModel
 
 @Composable
-fun RoutineListScreen(
+fun TaskListScreen(
     navHostController: NavHostController,
     viewModel: TaskListViewModel = hiltViewModel()
 ) {
@@ -35,9 +33,9 @@ fun RoutineListScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Title(text = "Routine")
+                        Title(text = "Task")
                         FloatingActionButton(
-                            onClick = {navHostController.navigate("RoutineNew")},
+                            onClick = {navHostController.navigate("TaskNew")},
                             modifier = Modifier.size(36.dp)
                         ) {
                             Icon(

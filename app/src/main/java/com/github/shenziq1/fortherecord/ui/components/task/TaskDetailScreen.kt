@@ -1,4 +1,4 @@
-package com.github.shenziq1.fortherecord.ui.components.routine
+package com.github.shenziq1.fortherecord.ui.components.task
 
 import android.util.Log
 import androidx.compose.foundation.layout.*
@@ -14,13 +14,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.ui.common.TopBackBar
 import com.github.shenziq1.fortherecord.viewmodel.TaskDetailViewModel
-import com.github.shenziq1.fortherecord.viewmodel.TaskEntryViewModel
 import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun RoutineDetailScreen(
+fun TaskDetailScreen(
     id: Int,
     navHostController: NavHostController,
     viewModel: TaskDetailViewModel = hiltViewModel()
@@ -68,7 +67,7 @@ fun RoutineDetailScreen(
 
             Button(onClick = {
                 //focusManager.moveFocus(FocusDirection.Down)
-                navHostController.navigate("RoutineEdit/${id}")
+                navHostController.navigate("TaskEdit/${id}")
             }) {
                 Text(text = "edit")
             }

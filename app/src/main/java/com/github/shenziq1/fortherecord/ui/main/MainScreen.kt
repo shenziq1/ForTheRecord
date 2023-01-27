@@ -14,40 +14,40 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.github.shenziq1.fortherecord.ui.components.routine.RoutineDetailScreen
-import com.github.shenziq1.fortherecord.ui.components.routine.RoutineEditScreen
-import com.github.shenziq1.fortherecord.ui.components.routine.RoutineListScreen
-import com.github.shenziq1.fortherecord.ui.components.routine.RoutineNewScreen
+import com.github.shenziq1.fortherecord.ui.components.task.TaskDetailScreen
+import com.github.shenziq1.fortherecord.ui.components.task.TaskEditScreen
+import com.github.shenziq1.fortherecord.ui.components.task.TaskListScreen
+import com.github.shenziq1.fortherecord.ui.components.task.TaskNewScreen
 import com.github.shenziq1.fortherecord.ui.components.setting.SettingScreen
 import com.github.shenziq1.fortherecord.ui.components.statictics.StatisticsScreen
-import com.github.shenziq1.fortherecord.ui.components.today.TodayScreen
+import com.github.shenziq1.fortherecord.ui.components.goal.GoalScreen
 
 @Composable
 fun MainScreen(navHostController: NavHostController) {
     Scaffold (bottomBar = {BottomNavigationBar(navHostController = navHostController)}){
-        NavHost(navController = navHostController, startDestination = "Routine"){
-            navigation(startDestination = "RoutineHome", route = "Routine"){
-                composable("RoutineHome"){
-                    RoutineListScreen(navHostController = navHostController)
+        NavHost(navController = navHostController, startDestination = "Task"){
+            navigation(startDestination = "TaskHome", route = "Task"){
+                composable("TaskHome"){
+                    TaskListScreen(navHostController = navHostController)
                 }
-                composable("RoutineNew"){
-                    RoutineNewScreen(navHostController = navHostController)
+                composable("TaskNew"){
+                    TaskNewScreen(navHostController = navHostController)
                 }
-                composable(route = "RoutineDetail/{taskId}", arguments = listOf(navArgument("taskId"){
+                composable(route = "TaskDetail/{taskId}", arguments = listOf(navArgument("taskId"){
                     type = NavType.IntType
                 })){
-                    RoutineDetailScreen(id = (it.arguments?.getInt("taskId") ?: 0), navHostController = navHostController)
+                    TaskDetailScreen(id = (it.arguments?.getInt("taskId") ?: 0), navHostController = navHostController)
                 }
-                composable(route = "RoutineEdit/{taskId}", arguments = listOf(navArgument("taskId"){
+                composable(route = "TaskEdit/{taskId}", arguments = listOf(navArgument("taskId"){
                     type = NavType.IntType
                 })){
-                    RoutineEditScreen(id = (it.arguments?.getInt("taskId") ?: 0), navHostController = navHostController)
+                    TaskEditScreen(id = (it.arguments?.getInt("taskId") ?: 0), navHostController = navHostController)
                 }
 
             }
-            navigation(startDestination = "TodayHome", route = "Today"){
-                composable("TodayHome"){
-                    TodayScreen(navHostController = navHostController)
+            navigation(startDestination = "GoalHome", route = "Goal"){
+                composable("GoalHome"){
+                    GoalScreen(navHostController = navHostController)
                 }
             }
             navigation(startDestination = "StatisticsHome", route = "Statistics"){
@@ -67,7 +67,7 @@ fun MainScreen(navHostController: NavHostController) {
 
 @Composable
 fun BottomNavigationBar(navHostController: NavHostController) {
-    val items = listOf("Routine", "Today", "Statistics", "Setting")
+    val items = listOf("Task", "Goal", "Statistics", "Setting")
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 

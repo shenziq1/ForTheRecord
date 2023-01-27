@@ -30,7 +30,7 @@ fun TaskCard(
     task: Task,
     navHostController: NavHostController,
 ) {
-    val route = "RoutineDetail/${task.id}"
+    val route = "TaskDetail/${task.id}"
 
     Card(
         onClick = { navHostController.navigate(route) },
@@ -76,7 +76,7 @@ fun SwipableTaskCard(
                         Log.d("viewmodel9", "I should be dismissed")
                     }
                     DismissValue.DismissedToStart -> {
-                        navHostController.navigate("RoutineEdit/${task.id}")
+                        navHostController.navigate("TaskEdit/${task.id}")
                         Log.d("viewmodel9", "I am at edit now")
                     }
                     else -> {}
@@ -96,35 +96,5 @@ fun SwipableTaskCard(
     ) {
         TaskCard(task = task, navHostController = navHostController)
         Log.d("where", task.name)
-    }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun SwipeableSample() {
-    val width = 96.dp
-    val squareSize = 48.dp
-
-    val swipeableState = rememberSwipeableState(0)
-    val sizePx = with(LocalDensity.current) { squareSize.toPx() }
-    val anchors = mapOf(0f to 0, sizePx to 1) // Maps anchor points (in px) to states
-
-    Box(
-        modifier = Modifier
-            .width(width)
-            .swipeable(
-                state = swipeableState,
-                anchors = anchors,
-                thresholds = { _, _ -> FractionalThreshold(0.3f) },
-                orientation = Orientation.Horizontal
-            )
-            .background(Color.LightGray)
-    ) {
-        Box(
-            Modifier
-                .offset { IntOffset(swipeableState.offset.value.roundToInt(), 0) }
-                .size(squareSize)
-                .background(Color.DarkGray)
-        )
     }
 }

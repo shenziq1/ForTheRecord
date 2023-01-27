@@ -1,0 +1,4 @@
+task and goal
+tasks are grouped, group title is a low height, full size width rectangle, same group has same family of color, but importance is indicated by color's brightness
+hold to form a group
+ 

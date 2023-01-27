@@ -1,4 +1,4 @@
-package com.github.shenziq1.fortherecord.ui.components.routine
+package com.github.shenziq1.fortherecord.ui.components.task
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun RoutineNewScreen(
+fun TaskNewScreen(
     navHostController: NavHostController,
     viewModel: TaskEntryViewModel = hiltViewModel()
 ) {

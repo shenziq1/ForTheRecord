@@ -1,6 +1,5 @@
-package com.github.shenziq1.fortherecord.ui.components.routine
+package com.github.shenziq1.fortherecord.ui.components.task
 
-import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
@@ -10,7 +9,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
@@ -27,7 +25,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun RoutineEditScreen(
+fun TaskEditScreen(
     id: Int,
     navHostController: NavHostController,
     viewModel: TaskEntryViewModel = hiltViewModel()
