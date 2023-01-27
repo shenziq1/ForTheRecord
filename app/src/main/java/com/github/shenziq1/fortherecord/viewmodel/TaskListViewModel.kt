@@ -14,7 +14,7 @@ import javax.inject.Inject
 data class TaskListUiState(val taskList: List<Task> = listOf())
 
 @HiltViewModel
-class TaskListViewModel @Inject constructor(offlineRepository: OfflineRepository) :
+class TaskListViewModel @Inject constructor(private val offlineRepository: OfflineRepository) :
     ViewModel() {
     val taskListUiState: StateFlow<TaskListUiState> = offlineRepository.getAllTasks().map {
         TaskListUiState(it)
@@ -23,4 +23,8 @@ class TaskListViewModel @Inject constructor(offlineRepository: OfflineRepository
         started = SharingStarted.WhileSubscribed(5000L),
         initialValue = TaskListUiState()
     )
+
+    suspend fun deleteTask(task: Task){
+        offlineRepository.delete(task)
+    }
 }

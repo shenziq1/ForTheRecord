@@ -42,6 +42,7 @@ fun RoutineNewScreen(
         ) {
             OutlinedTextField(
                 value = name,
+                singleLine = true,
                 label = { Text(text = "name") },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Ascii,

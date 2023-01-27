@@ -48,6 +48,8 @@ fun RoutineEditScreen(
             Text(text = "Let's change name to ")
             OutlinedTextField(
                 value = name,
+                singleLine = true,
+                label = { Text(text = "name") },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Ascii,
                     imeAction = ImeAction.Done
