@@ -1,11 +1,15 @@
 package com.github.shenziq1.fortherecord.ui.main
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -25,39 +29,41 @@ import com.github.shenziq1.fortherecord.ui.components.goal.GoalScreen
 @Composable
 fun MainScreen(navHostController: NavHostController) {
     Scaffold (bottomBar = {BottomNavigationBar(navHostController = navHostController)}){
-        NavHost(navController = navHostController, startDestination = "Task"){
-            navigation(startDestination = "TaskHome", route = "Task"){
-                composable("TaskHome"){
-                    TaskListScreen(navHostController = navHostController)
-                }
-                composable("TaskNew"){
-                    TaskNewScreen(navHostController = navHostController)
-                }
-                composable(route = "TaskDetail/{taskId}", arguments = listOf(navArgument("taskId"){
-                    type = NavType.IntType
-                })){
-                    TaskDetailScreen(id = (it.arguments?.getInt("taskId") ?: 0), navHostController = navHostController)
-                }
-                composable(route = "TaskEdit/{taskId}", arguments = listOf(navArgument("taskId"){
-                    type = NavType.IntType
-                })){
-                    TaskEditScreen(id = (it.arguments?.getInt("taskId") ?: 0), navHostController = navHostController)
-                }
+        Box(modifier = Modifier.fillMaxSize().padding(it)) {
+            NavHost(navController = navHostController, startDestination = "Task"){
+                navigation(startDestination = "TaskHome", route = "Task"){
+                    composable("TaskHome"){
+                        TaskListScreen(navHostController = navHostController)
+                    }
+                    composable("TaskNew"){
+                        TaskNewScreen(navHostController = navHostController)
+                    }
+                    composable(route = "TaskDetail/{taskId}", arguments = listOf(navArgument("taskId"){
+                        type = NavType.IntType
+                    })){
+                        TaskDetailScreen(id = (it.arguments?.getInt("taskId") ?: 0), navHostController = navHostController)
+                    }
+                    composable(route = "TaskEdit/{taskId}", arguments = listOf(navArgument("taskId"){
+                        type = NavType.IntType
+                    })){
+                        TaskEditScreen(id = (it.arguments?.getInt("taskId") ?: 0), navHostController = navHostController)
+                    }
 
-            }
-            navigation(startDestination = "GoalHome", route = "Goal"){
-                composable("GoalHome"){
-                    GoalScreen(navHostController = navHostController)
                 }
-            }
-            navigation(startDestination = "StatisticsHome", route = "Statistics"){
-                composable("StatisticsHome"){
-                    StatisticsScreen(navHostController = navHostController)
+                navigation(startDestination = "GoalHome", route = "Goal"){
+                    composable("GoalHome"){
+                        GoalScreen(navHostController = navHostController)
+                    }
                 }
-            }
-            navigation(startDestination = "SettingHome", route = "Setting"){
-                composable("SettingHome"){
-                    SettingScreen(navHostController = navHostController)
+                navigation(startDestination = "StatisticsHome", route = "Statistics"){
+                    composable("StatisticsHome"){
+                        StatisticsScreen(navHostController = navHostController)
+                    }
+                }
+                navigation(startDestination = "SettingHome", route = "Setting"){
+                    composable("SettingHome"){
+                        SettingScreen(navHostController = navHostController)
+                    }
                 }
             }
         }
