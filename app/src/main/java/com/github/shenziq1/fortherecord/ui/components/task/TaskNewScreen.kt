@@ -17,7 +17,6 @@ import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.ui.common.TopBackBar
 import com.github.shenziq1.fortherecord.ui.theme.Blue500
 import com.github.shenziq1.fortherecord.ui.theme.Blue700
-import com.github.shenziq1.fortherecord.viewmodel.TaskUiState
 import com.github.shenziq1.fortherecord.viewmodel.TaskEntryViewModel
 import kotlinx.coroutines.launch
 
@@ -33,7 +32,7 @@ fun TaskNewScreen(
 
     Scaffold(
         topBar = {
-            TopBackBar(navHostController = navHostController)
+            TopBackBar(onClick = {navHostController.popBackStack()})
         }) {
         Column(
             modifier = Modifier.fillMaxSize(),

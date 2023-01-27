@@ -20,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.database.Task
 import com.github.shenziq1.fortherecord.ui.theme.Teal200
+import com.github.shenziq1.fortherecord.viewmodel.TaskDetailViewModel
 import com.github.shenziq1.fortherecord.viewmodel.TaskListViewModel
 import kotlinx.coroutines.launch
 
@@ -42,14 +43,15 @@ fun SwipableTaskCard(
                         viewModel.deleteTask(currentTask)
                     }
                     Log.d("viewmodel9", "I should be dismissed")
+                    true
                 }
                 DismissValue.DismissedToStart -> {
                     navHostController.navigate("TaskEdit/${currentTask.id}")
                     Log.d("viewmodel9", "I am at edit now")
+                    false
                 }
-                else -> {}
+                else -> {false}
             }
-            true
         })
 
     SwipeToDismiss(

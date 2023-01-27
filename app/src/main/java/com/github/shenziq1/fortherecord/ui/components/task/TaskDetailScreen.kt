@@ -7,7 +7,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -15,7 +14,6 @@ import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.ui.common.TestText
 import com.github.shenziq1.fortherecord.ui.common.TopBackBar
 import com.github.shenziq1.fortherecord.viewmodel.TaskDetailViewModel
-import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -35,7 +33,7 @@ fun TaskDetailScreen(
 //        viewModel.getUiState(id)
 //    }
     val name = taskUiState.value.name
-    Scaffold(topBar = { TopBackBar(navHostController = navHostController) }) {
+    Scaffold(topBar = { TopBackBar(onClick = {navHostController.popBackStack()}) }) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,

@@ -19,7 +19,6 @@ import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.ui.common.TopBackBar
 import com.github.shenziq1.fortherecord.ui.theme.Blue500
 import com.github.shenziq1.fortherecord.ui.theme.Blue700
-import com.github.shenziq1.fortherecord.viewmodel.TaskUiState
 import com.github.shenziq1.fortherecord.viewmodel.TaskEntryViewModel
 import kotlinx.coroutines.launch
 
@@ -37,7 +36,7 @@ fun TaskEditScreen(
     Log.d("viewmodel2", viewModel.taskUiState.id.toString())
     val taskUiState = viewModel.taskUiState
 
-    Scaffold(topBar = { TopBackBar(navHostController = navHostController) }) {
+    Scaffold(topBar = { TopBackBar(onClick = { navHostController.popBackStack() }) }) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
@@ -72,7 +71,7 @@ fun TaskEditScreen(
                 coroutineScope.launch {
                     viewModel.saveEditedTask()
                 }
-                navHostController.popBackStack()
+                navHostController.navigate("TaskHome")
             }) {
                 Text(text = "save")
             }
