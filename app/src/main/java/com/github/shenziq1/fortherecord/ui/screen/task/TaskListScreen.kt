@@ -1,4 +1,4 @@
-package com.github.shenziq1.fortherecord.ui.components.task
+package com.github.shenziq1.fortherecord.ui.screen.task
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,10 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.github.shenziq1.fortherecord.database.Task
 import com.github.shenziq1.fortherecord.ui.common.SwipableTaskCard
 import com.github.shenziq1.fortherecord.ui.common.Title
-import com.github.shenziq1.fortherecord.viewmodel.TaskListViewModel
+import com.github.shenziq1.fortherecord.ui.viewmodel.task.TaskListViewModel
 
 @Composable
 fun TaskListScreen(

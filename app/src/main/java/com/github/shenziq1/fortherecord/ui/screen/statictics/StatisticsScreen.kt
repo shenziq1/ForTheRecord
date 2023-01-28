@@ -1,4 +1,4 @@
-package com.github.shenziq1.fortherecord.ui.components.statictics
+package com.github.shenziq1.fortherecord.ui.screen.statictics
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController

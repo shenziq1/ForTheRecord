@@ -1,4 +1,4 @@
-package com.github.shenziq1.fortherecord.viewmodel
+package com.github.shenziq1.fortherecord.ui.viewmodel.task
 
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -7,7 +7,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.github.shenziq1.fortherecord.database.Task
 import com.github.shenziq1.fortherecord.repository.OfflineRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.filterNotNull
@@ -16,17 +15,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TaskEntryViewModel @Inject constructor(
+class TaskEditViewModel @Inject constructor(
     private val offlineRepository: OfflineRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val taskId = savedStateHandle.get<Int>("taskId")?:0
     var taskUiState: TaskUiState by mutableStateOf(TaskUiState())
         private set
-
-    fun updateUiState(newTaskUiState: TaskUiState) {
-        taskUiState = newTaskUiState.copy()
-    }
 
     private suspend fun getUiState(id: Int) {
         val task = offlineRepository.getTask(id).filterNotNull().first()
@@ -37,30 +32,23 @@ class TaskEntryViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             getUiState(taskId)
-            Log.d("viewmodel10", taskUiState.name)
         }
     }
 
-    suspend fun saveEditedTask() {
-        if (taskUiState.isValid()) {
-            offlineRepository.update(taskUiState.toTask())
-            Log.d("update", taskUiState.toTask().name)
-        }
+    fun setNewTaskName(name: String){
+        taskUiState = taskUiState.copy(name = name)
     }
 
-    suspend fun saveNewTask() {
-        if (taskUiState.isValid()) {
-            offlineRepository.insert(taskUiState.toTask())
-            Log.d("insert", taskUiState.toTask().name)
-        }
+    fun setNewTaskGoal(timeGoal: Long){
+        taskUiState = taskUiState.copy(timeGoal = timeGoal)
     }
 
-    suspend fun deleteTask() {
-        offlineRepository.delete(taskUiState.toTask())
-        Log.d("delete", taskUiState.toTask().name)
+    fun saveEditedTask() {
+        viewModelScope.launch {
+            if (taskUiState.isValid()) {
+                offlineRepository.update(taskUiState.toTask())
+            }
+        }
     }
 }
 
-fun TaskUiState.isValid(): Boolean {
-    return name.isNotBlank()
-}

@@ -1,4 +1,4 @@
-package com.github.shenziq1.fortherecord.viewmodel
+package com.github.shenziq1.fortherecord.ui.viewmodel.task
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class TaskListUiState(val taskList: List<Task> = listOf())
@@ -24,11 +25,15 @@ class TaskListViewModel @Inject constructor(private val offlineRepository: Offli
         initialValue = TaskListUiState()
     )
 
-    suspend fun deleteTask(task: Task){
-        offlineRepository.delete(task)
+    fun deleteTask(task: Task){
+        viewModelScope.launch {
+            offlineRepository.delete(task)
+        }
     }
 
-    suspend fun updateTask(task: Task){
-        offlineRepository.update(task)
+    fun updateTask(task: Task){
+        viewModelScope.launch {
+            offlineRepository.update(task)
+        }
     }
 }

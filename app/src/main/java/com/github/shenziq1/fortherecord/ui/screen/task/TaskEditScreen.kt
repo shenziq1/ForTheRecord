@@ -1,5 +1,6 @@
-package com.github.shenziq1.fortherecord.ui.components.task
+package com.github.shenziq1.fortherecord.ui.screen.task
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -8,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -17,18 +19,18 @@ import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.ui.common.TopBackBar
 import com.github.shenziq1.fortherecord.ui.theme.Blue500
 import com.github.shenziq1.fortherecord.ui.theme.Blue700
-import com.github.shenziq1.fortherecord.viewmodel.TaskEntryViewModel
+import com.github.shenziq1.fortherecord.ui.viewmodel.task.TaskEditViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun TaskNewScreen(
+fun TaskEditScreen(
     navHostController: NavHostController,
-    viewModel: TaskEntryViewModel = hiltViewModel()
+    viewModel: TaskEditViewModel = hiltViewModel()
 ) {
+    val focusManager = LocalFocusManager.current
     val coroutineScope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
-    val taskUiState = viewModel.taskUiState
     var name by remember {
         mutableStateOf("")
     }
@@ -36,30 +38,25 @@ fun TaskNewScreen(
         mutableStateOf("")
     }
 
-    Scaffold(
-        topBar = {
-            TopBackBar(onClick = {navHostController.popBackStack()})
-        }) {
+    Scaffold(topBar = { TopBackBar(onClick = { navHostController.popBackStack() }) }) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Let's give it a name")
+            Text(text = "Let's change name to ")
             OutlinedTextField(
                 value = name,
                 singleLine = true,
                 label = { Text(text = "name") },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Ascii,
-                    imeAction = ImeAction.Done
+                    imeAction = ImeAction.Next
                 ),
                 keyboardActions = KeyboardActions(
-                    onDone = {
+                    onNext = {
                         keyboardController?.hide()
-                        coroutineScope.launch {
-                            viewModel.updateUiState(taskUiState.copy(name = name))
-                        }
+                        viewModel.setNewTaskName(name)
                     }),
                 onValueChange = {
                     name = it
@@ -81,9 +78,7 @@ fun TaskNewScreen(
                 keyboardActions = KeyboardActions(
                     onDone = {
                         keyboardController?.hide()
-                        coroutineScope.launch {
-                            viewModel.updateUiState(taskUiState.copy(timeGoal = timeGoal.toLong() * 1000))
-                        }
+                        viewModel.setNewTaskGoal(timeGoal = timeGoal.toLong() * 1000)
                     }),
                 onValueChange = {
                     timeGoal = it
@@ -95,32 +90,13 @@ fun TaskNewScreen(
             )
             Spacer(modifier = Modifier.height(40.dp))
             Button(onClick = {
-                coroutineScope.launch {
-                    viewModel.saveNewTask()
-                    navHostController.popBackStack()
-                }
+                //focusManager.moveFocus(FocusDirection.Down)
+                viewModel.saveEditedTask()
+                navHostController.navigate("TaskHome")
             }) {
                 Text(text = "save")
             }
         }
+
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

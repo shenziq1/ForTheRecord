@@ -1,4 +1,4 @@
-package com.github.shenziq1.fortherecord.viewmodel
+package com.github.shenziq1.fortherecord.ui.viewmodel.task
 
 import com.github.shenziq1.fortherecord.database.Task
 
@@ -37,4 +37,8 @@ fun Task.toTaskUiState(): TaskUiState {
         startingTime = startingTime,
         endingTime = endingTime
     )
+}
+
+fun TaskUiState.isValid(): Boolean {
+    return name.isNotBlank()
 }

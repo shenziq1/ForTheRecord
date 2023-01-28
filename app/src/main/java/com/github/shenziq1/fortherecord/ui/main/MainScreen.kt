@@ -3,15 +3,12 @@ package com.github.shenziq1.fortherecord.ui.main
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -20,13 +17,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.github.shenziq1.fortherecord.ui.components.goal.GoalScreen
-import com.github.shenziq1.fortherecord.ui.components.setting.SettingScreen
-import com.github.shenziq1.fortherecord.ui.components.statictics.StatisticsScreen
-import com.github.shenziq1.fortherecord.ui.components.task.TaskDetailScreen
-import com.github.shenziq1.fortherecord.ui.components.task.TaskEditScreen
-import com.github.shenziq1.fortherecord.ui.components.task.TaskListScreen
-import com.github.shenziq1.fortherecord.ui.components.task.TaskNewScreen
+import com.github.shenziq1.fortherecord.ui.screen.goal.GoalScreen
+import com.github.shenziq1.fortherecord.ui.screen.setting.SettingScreen
+import com.github.shenziq1.fortherecord.ui.screen.statictics.StatisticsScreen
+import com.github.shenziq1.fortherecord.ui.screen.task.TaskDetailScreen
+import com.github.shenziq1.fortherecord.ui.screen.task.TaskEditScreen
+import com.github.shenziq1.fortherecord.ui.screen.task.TaskListScreen
+import com.github.shenziq1.fortherecord.ui.screen.task.TaskNewScreen
 
 @Composable
 fun MainScreen(navHostController: NavHostController) {

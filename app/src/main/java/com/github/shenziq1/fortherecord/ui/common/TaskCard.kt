@@ -1,11 +1,9 @@
 package com.github.shenziq1.fortherecord.ui.common
 
 import android.util.Log
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
@@ -20,8 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.database.Task
 import com.github.shenziq1.fortherecord.ui.theme.Teal200
-import com.github.shenziq1.fortherecord.viewmodel.TaskDetailViewModel
-import com.github.shenziq1.fortherecord.viewmodel.TaskListViewModel
+import com.github.shenziq1.fortherecord.ui.viewmodel.task.TaskListViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -31,7 +28,6 @@ fun SwipableTaskCard(
     navHostController: NavHostController,
     viewModel: TaskListViewModel = hiltViewModel()
 ) {
-    val coroutineScope = rememberCoroutineScope()
     val currentTask by rememberUpdatedState(newValue = task)
     val route = "TaskDetail/${currentTask.id}"
     val state = rememberDismissState(
@@ -39,9 +35,7 @@ fun SwipableTaskCard(
         confirmStateChange = {
             when (it) {
                 DismissValue.DismissedToEnd -> {
-                    coroutineScope.launch {
-                        viewModel.deleteTask(currentTask)
-                    }
+                    viewModel.deleteTask(currentTask)
                     Log.d("viewmodel9", "I should be dismissed")
                     true
                 }
@@ -109,9 +103,7 @@ fun SwipableTaskCard(
         Card(
             onClick = {
                 navHostController.navigate(route)
-                coroutineScope.launch {
-                    viewModel.updateTask(currentTask.copy(clickTimes = currentTask.clickTimes + 1))
-                }
+                viewModel.updateTask(currentTask.copy(clickTimes = currentTask.clickTimes + 1))
             },
             backgroundColor = Teal200,
             modifier = Modifier

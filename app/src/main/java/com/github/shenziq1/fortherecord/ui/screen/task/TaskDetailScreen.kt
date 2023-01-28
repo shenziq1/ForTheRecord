@@ -1,4 +1,4 @@
-package com.github.shenziq1.fortherecord.ui.components.task
+package com.github.shenziq1.fortherecord.ui.screen.task
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.ui.common.TopBackBar
-import com.github.shenziq1.fortherecord.viewmodel.TaskDetailViewModel
+import com.github.shenziq1.fortherecord.ui.viewmodel.task.TaskDetailViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -39,11 +39,7 @@ fun TaskDetailScreen(
             when (isRunning) {
                 true -> {
                     isRunning = false
-                    coroutineScope.launch {
-                        viewModel.updateTask(
-                            taskUiState.value.copy(timeSpent = taskUiState.value.timeSpent + timeSpent)
-                        )
-                    }
+                    viewModel.addTaskTimeSpent(timeSpent)
                     navHostController.popBackStack()
                 }
                 false -> {
@@ -63,11 +59,7 @@ fun TaskDetailScreen(
                 when (isRunning) {
                     true -> {
                         isRunning = false
-                        coroutineScope.launch {
-                            viewModel.updateTask(
-                                taskUiState.value.copy(timeSpent = taskUiState.value.timeSpent + timeSpent)
-                            )
-                        }
+                        viewModel.addTaskTimeSpent(timeSpent)
                     }
                     false -> {
                         isRunning = true
@@ -86,17 +78,7 @@ fun TaskDetailScreen(
                     true -> Text(text = "Stop")
                     false -> Text(text = "Start")
                 }
-
-                //Icon(imageVector = Icons.Default.Settings, contentDescription = "")
             }
-
-
-//            Button(onClick = { coroutineScope.launch {
-//                viewModel.deleteTask()
-//                navHostController.popBackStack()
-//            } }) {
-//                Text(text = "delete")
-//            }
         }
 
     }
