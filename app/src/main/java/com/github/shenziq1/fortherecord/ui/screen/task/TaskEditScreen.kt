@@ -1,6 +1,5 @@
 package com.github.shenziq1.fortherecord.ui.screen.task
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -20,7 +19,6 @@ import com.github.shenziq1.fortherecord.ui.common.TopBackBar
 import com.github.shenziq1.fortherecord.ui.theme.Blue500
 import com.github.shenziq1.fortherecord.ui.theme.Blue700
 import com.github.shenziq1.fortherecord.ui.viewmodel.task.TaskEditViewModel
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -29,7 +27,6 @@ fun TaskEditScreen(
     viewModel: TaskEditViewModel = hiltViewModel()
 ) {
     val focusManager = LocalFocusManager.current
-    val coroutineScope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
     var name by remember {
         mutableStateOf("")

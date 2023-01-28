@@ -8,7 +8,6 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,7 +18,6 @@ import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.database.Task
 import com.github.shenziq1.fortherecord.ui.theme.Teal200
 import com.github.shenziq1.fortherecord.ui.viewmodel.task.TaskListViewModel
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -116,8 +114,11 @@ fun SwipableTaskCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(text = currentTask.name, modifier = Modifier.padding(20.dp, 0.dp))
-                Text(text = (currentTask.timeSpent/1000).toString(), modifier = Modifier.padding(20.dp, 0.dp))
-                Text(text = (currentTask.timeGoal/1000).toString(), modifier = Modifier.padding(20.dp, 0.dp))
+                Text(
+                    text = (task.timeSpent / 1000).toString(),
+                    modifier = Modifier.padding(20.dp, 0.dp)
+                )
+                Text(text = (task.timeGoal / 1000).toString(), modifier = Modifier.padding(20.dp, 0.dp))
             }
         }
         Log.d("where", currentTask.name)

@@ -17,7 +17,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.github.shenziq1.fortherecord.ui.screen.goal.GoalScreen
+import com.github.shenziq1.fortherecord.ui.screen.goal.GoalListScreen
 import com.github.shenziq1.fortherecord.ui.screen.setting.SettingScreen
 import com.github.shenziq1.fortherecord.ui.screen.statictics.StatisticsScreen
 import com.github.shenziq1.fortherecord.ui.screen.task.TaskDetailScreen
@@ -61,7 +61,7 @@ fun MainScreen(navHostController: NavHostController) {
                 }
                 navigation(startDestination = "GoalHome", route = "Goal") {
                     composable("GoalHome") {
-                        GoalScreen(navHostController = navHostController)
+                        GoalListScreen(navHostController = navHostController)
                     }
                 }
                 navigation(startDestination = "StatisticsHome", route = "Statistics") {

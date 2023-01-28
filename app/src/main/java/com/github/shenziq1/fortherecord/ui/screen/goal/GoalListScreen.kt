@@ -1,4 +1,4 @@
-package com.github.shenziq1.fortherecord.ui.screen.task
+package com.github.shenziq1.fortherecord.ui.screen.goal
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -6,6 +6,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -19,12 +21,11 @@ import com.github.shenziq1.fortherecord.ui.common.Title
 import com.github.shenziq1.fortherecord.ui.viewmodel.task.TaskListViewModel
 
 @Composable
-fun TaskListScreen(
+fun GoalListScreen(
     navHostController: NavHostController,
     viewModel: TaskListViewModel = hiltViewModel()
 ) {
     val taskListUiState by viewModel.taskListUiState.collectAsState()
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -34,13 +35,16 @@ fun TaskListScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Title(text = "Task")
+                        Title(text = "Goal")
+//                        IconButton(onClick = { ) {
+//                            Icon(imageVector = Icons.Default.Menu, contentDescription = "")
+//                        }
                         FloatingActionButton(
-                            onClick = {navHostController.navigate("TaskNew")},
+                            onClick = {},
                             modifier = Modifier.size(36.dp)
                         ) {
                             Icon(
-                                imageVector = Icons.Default.Add,
+                                imageVector = Icons.Default.Share,
                                 contentDescription = "",
                                 tint = MaterialTheme.colors.onPrimary
                             )
@@ -54,14 +58,13 @@ fun TaskListScreen(
     )
     {
         val taskList = taskListUiState.taskList
-        when (taskList.size){
+        when (taskList.size) {
             0 -> Text(text = "no content")
             else -> LazyColumn() {
-                items(items = taskList, key = {task -> task.id}) {
-                    task -> SwipableTaskCard(task = task, navHostController =navHostController)
+                items(items = taskList, key = { task -> task.id }) { task ->
+                    GoalCard(task = task)
                 }
             }
         }
     }
 }
-
