@@ -29,6 +29,12 @@ fun TaskNewScreen(
     val coroutineScope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
     val taskUiState = viewModel.taskUiState
+    var name by remember {
+        mutableStateOf("")
+    }
+    var timeGoal by remember {
+        mutableStateOf("")
+    }
 
     Scaffold(
         topBar = {
@@ -39,8 +45,9 @@ fun TaskNewScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Text(text = "Let's give it a name")
             OutlinedTextField(
-                value = taskUiState.name,
+                value = name,
                 singleLine = true,
                 label = { Text(text = "name") },
                 keyboardOptions = KeyboardOptions(
@@ -50,11 +57,36 @@ fun TaskNewScreen(
                 keyboardActions = KeyboardActions(
                     onDone = {
                         keyboardController?.hide()
+                        coroutineScope.launch {
+                            viewModel.updateUiState(taskUiState.copy(name = name))
+                        }
                     }),
                 onValueChange = {
-                    coroutineScope.launch {
-                        viewModel.updateUiState(taskUiState.copy(name = it))
-                    }
+                    name = it
+                },
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Blue700,
+                    unfocusedBorderColor = Blue500
+                )
+            )
+            Text(text = "Let's set a time goal")
+            OutlinedTextField(
+                value = timeGoal,
+                singleLine = true,
+                label = { Text(text = "goal") },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Done
+                ),
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        keyboardController?.hide()
+                        coroutineScope.launch {
+                            viewModel.updateUiState(taskUiState.copy(timeGoal = timeGoal.toLong() * 1000))
+                        }
+                    }),
+                onValueChange = {
+                    timeGoal = it
                 },
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Blue700,

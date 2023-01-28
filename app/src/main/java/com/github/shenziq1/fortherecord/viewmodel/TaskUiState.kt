@@ -6,11 +6,11 @@ data class TaskUiState(
     val id: Int = 0,
     var name: String = "",
     val category: String = "",
-    val timeSpent: Int = 0,
-    val timeGoal: Int = 0,
+    val timeSpent: Long = 0L,
+    val timeGoal: Long = 0L,
     val clickTimes: Int = 0,
-    val startingTime: Int = 0,
-    val endingTime: Int = 0
+    val startingTime: Long = 0L,
+    val endingTime: Long = 0L
 )
 
 fun TaskUiState.toTask(): Task {

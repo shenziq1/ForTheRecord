@@ -11,10 +11,10 @@ data class Task(
     //@ColumnInfo
     val name: String,
     val category: String,
-    val timeSpent: Int,
-    val timeGoal: Int,
+    val timeSpent: Long,
+    val timeGoal: Long,
     val clickTimes: Int,
-    val startingTime: Int,
-    val endingTime: Int
+    val startingTime: Long,
+    val endingTime: Long
 
 )

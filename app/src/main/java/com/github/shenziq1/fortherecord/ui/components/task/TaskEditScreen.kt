@@ -25,7 +25,6 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TaskEditScreen(
-    id: Int,
     navHostController: NavHostController,
     viewModel: TaskEntryViewModel = hiltViewModel()
 ) {

@@ -28,4 +28,8 @@ class TaskDetailViewModel @Inject constructor(
         offlineRepository.delete(taskUiState.value.toTask())
     }
 
+    suspend fun updateTask(newTaskUiState: TaskUiState) {
+        offlineRepository.update(newTaskUiState.toTask())
+    }
+
 }

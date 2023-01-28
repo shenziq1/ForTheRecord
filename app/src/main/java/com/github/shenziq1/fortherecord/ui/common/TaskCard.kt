@@ -124,7 +124,8 @@ fun SwipableTaskCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(text = currentTask.name, modifier = Modifier.padding(20.dp, 0.dp))
-                Text(text = currentTask.clickTimes.toString(), modifier = Modifier.padding(20.dp, 0.dp))
+                Text(text = (currentTask.timeSpent/1000).toString(), modifier = Modifier.padding(20.dp, 0.dp))
+                Text(text = (currentTask.timeGoal/1000).toString(), modifier = Modifier.padding(20.dp, 0.dp))
             }
         }
         Log.d("where", currentTask.name)

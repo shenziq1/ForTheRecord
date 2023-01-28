@@ -50,10 +50,7 @@ fun MainScreen(navHostController: NavHostController) {
                             type = NavType.IntType
                         })
                     ) {
-                        TaskDetailScreen(
-                            id = (it.arguments?.getInt("taskId") ?: 0),
-                            navHostController = navHostController
-                        )
+                        TaskDetailScreen(navHostController = navHostController)
                     }
                     composable(
                         route = "TaskEdit/{taskId}",
@@ -61,10 +58,7 @@ fun MainScreen(navHostController: NavHostController) {
                             type = NavType.IntType
                         })
                     ) {
-                        TaskEditScreen(
-                            id = (it.arguments?.getInt("taskId") ?: 0),
-                            navHostController = navHostController
-                        )
+                        TaskEditScreen(navHostController = navHostController)
                     }
 
                 }

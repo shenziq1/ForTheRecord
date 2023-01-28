@@ -1,10 +1,14 @@
 package com.github.shenziq1.fortherecord.ui.components.task
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -18,46 +22,67 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun TaskDetailScreen(
-    id: Int,
     navHostController: NavHostController,
     viewModel: TaskDetailViewModel = hiltViewModel()
 ) {
     val coroutineScope = rememberCoroutineScope()
     val taskUiState = viewModel.taskUiState.collectAsState()
-    var timeLeft by remember {
-        mutableStateOf(60000L)
+    var timeSpent by remember {
+        mutableStateOf(0L)
     }
     var isRunning by remember {
         mutableStateOf(false)
     }
 
-    Scaffold(topBar = { TopBackBar(onClick = { navHostController.popBackStack() }) }) {
+    Scaffold(topBar = {
+        TopBackBar(onClick = {
+            when (isRunning) {
+                true -> {
+                    isRunning = false
+                    coroutineScope.launch {
+                        viewModel.updateTask(
+                            taskUiState.value.copy(timeSpent = taskUiState.value.timeSpent + timeSpent)
+                        )
+                    }
+                    navHostController.popBackStack()
+                }
+                false -> {
+                    navHostController.popBackStack()
+                }
+            }
+        })
+    }) {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
             Text(text = taskUiState.value.name)
-            Text(text = (timeLeft/1000L).toString(), fontSize = 36.sp)
+            Text(text = (timeSpent / 1000L).toString(), fontSize = 36.sp)
             FloatingActionButton(onClick = {
-                when(isRunning){
+                when (isRunning) {
                     true -> {
                         isRunning = false
+                        coroutineScope.launch {
+                            viewModel.updateTask(
+                                taskUiState.value.copy(timeSpent = taskUiState.value.timeSpent + timeSpent)
+                            )
+                        }
                     }
                     false -> {
                         isRunning = true
                         coroutineScope.launch {
-                            while (timeLeft > 0L && isRunning){
-                                delay(100L)
-                                timeLeft -= 100L
+                            delay(1000L)
+                            while (isRunning) {
+                                timeSpent += 1000L
+                                delay(1000L)
                             }
-                            isRunning = false
                         }
                     }
                 }
 
             }, modifier = Modifier.size(48.dp)) {
-                when(isRunning){
+                when (isRunning) {
                     true -> Text(text = "Stop")
                     false -> Text(text = "Start")
                 }
