@@ -1,4 +1,4 @@
-package com.github.shenziq1.fortherecord.ui.screen.task
+package com.github.shenziq1.fortherecord.ui.screen.routine
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -17,16 +18,15 @@ import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.ui.common.TopBackBar
 import com.github.shenziq1.fortherecord.ui.theme.Blue500
 import com.github.shenziq1.fortherecord.ui.theme.Blue700
-import com.github.shenziq1.fortherecord.ui.viewmodel.task.TaskNewViewModel
-import kotlinx.coroutines.launch
+import com.github.shenziq1.fortherecord.ui.viewmodel.task.TaskEditViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun TaskNewScreen(
+fun RoutineEditScreen(
     navHostController: NavHostController,
-    viewModel: TaskNewViewModel = hiltViewModel()
+    viewModel: TaskEditViewModel = hiltViewModel()
 ) {
-    val coroutineScope = rememberCoroutineScope()
+    val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
     var name by remember {
         mutableStateOf("")
@@ -35,16 +35,13 @@ fun TaskNewScreen(
         mutableStateOf("")
     }
 
-    Scaffold(
-        topBar = {
-            TopBackBar(onClick = {navHostController.popBackStack()})
-        }) {
+    Scaffold(topBar = { TopBackBar(onClick = { navHostController.popBackStack() }) }) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Let's give it a name")
+            Text(text = "Let's change name to ")
             OutlinedTextField(
                 value = name,
                 singleLine = true,
@@ -90,32 +87,13 @@ fun TaskNewScreen(
             )
             Spacer(modifier = Modifier.height(40.dp))
             Button(onClick = {
-                coroutineScope.launch {
-                    viewModel.saveNewTask()
-                    navHostController.popBackStack()
-                }
+                //focusManager.moveFocus(FocusDirection.Down)
+                viewModel.saveEditedTask()
+                navHostController.popBackStack()
             }) {
                 Text(text = "save")
             }
         }
+
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

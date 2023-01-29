@@ -27,7 +27,7 @@ fun SwipableTaskCard(
     viewModel: TaskListViewModel = hiltViewModel()
 ) {
     val currentTask by rememberUpdatedState(newValue = task)
-    val route = "TaskDetail/${currentTask.id}"
+    val route = "RoutineDetail/${currentTask.id}"
     val state = rememberDismissState(
         initialValue = DismissValue.Default,
         confirmStateChange = {
@@ -38,7 +38,7 @@ fun SwipableTaskCard(
                     true
                 }
                 DismissValue.DismissedToStart -> {
-                    navHostController.navigate("TaskEdit/${currentTask.id}")
+                    navHostController.navigate("RoutineEdit/${currentTask.id}")
                     Log.d("viewmodel9", "I am at edit now")
                     false
                 }

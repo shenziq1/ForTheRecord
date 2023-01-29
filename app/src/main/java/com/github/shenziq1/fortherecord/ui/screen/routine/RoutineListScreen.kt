@@ -1,4 +1,4 @@
-package com.github.shenziq1.fortherecord.ui.screen.task
+package com.github.shenziq1.fortherecord.ui.screen.routine
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,7 +19,7 @@ import com.github.shenziq1.fortherecord.ui.common.Title
 import com.github.shenziq1.fortherecord.ui.viewmodel.task.TaskListViewModel
 
 @Composable
-fun TaskListScreen(
+fun RoutineListScreen(
     navHostController: NavHostController,
     viewModel: TaskListViewModel = hiltViewModel()
 ) {
@@ -34,9 +34,9 @@ fun TaskListScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Title(text = "Task")
+                        Title(text = "Routine")
                         FloatingActionButton(
-                            onClick = {navHostController.navigate("TaskNew")},
+                            onClick = {navHostController.navigate("RoutineNew")},
                             modifier = Modifier.size(36.dp)
                         ) {
                             Icon(

@@ -2,3 +2,5 @@ task and goal
 tasks are grouped, group title is a low height, full size width rectangle, same group has same family of color, but importance is indicated by color's brightness
 hold to form a group
  
+切换页面的时候 炫酷的进度条动画
+routine today revert

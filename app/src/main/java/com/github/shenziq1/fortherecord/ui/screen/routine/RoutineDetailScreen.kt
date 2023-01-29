@@ -1,4 +1,4 @@
-package com.github.shenziq1.fortherecord.ui.screen.task
+package com.github.shenziq1.fortherecord.ui.screen.routine
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun TaskDetailScreen(
+fun RoutineDetailScreen(
     navHostController: NavHostController,
     viewModel: TaskDetailViewModel = hiltViewModel()
 ) {

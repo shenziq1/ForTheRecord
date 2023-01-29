@@ -1,12 +1,10 @@
-package com.github.shenziq1.fortherecord.ui.screen.goal
+package com.github.shenziq1.fortherecord.ui.screen.today
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -16,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.github.shenziq1.fortherecord.ui.common.SwipableTaskCard
 import com.github.shenziq1.fortherecord.ui.common.Title
 import com.github.shenziq1.fortherecord.ui.viewmodel.task.TaskListViewModel
 

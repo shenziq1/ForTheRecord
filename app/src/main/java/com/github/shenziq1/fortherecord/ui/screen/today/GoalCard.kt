@@ -1,4 +1,4 @@
-package com.github.shenziq1.fortherecord.ui.screen.goal
+package com.github.shenziq1.fortherecord.ui.screen.today
 
 import android.util.Log
 import androidx.compose.foundation.layout.*
@@ -7,7 +7,6 @@ import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.github.shenziq1.fortherecord.database.Task
