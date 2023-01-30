@@ -97,6 +97,7 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
 
     //more
+    implementation "com.google.accompanist:accompanist-navigation-animation:0.25.1"
     implementation "androidx.navigation:navigation-compose:$rootProject.composeNavigationVersion"
 }
 

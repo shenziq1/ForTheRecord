@@ -1,9 +1,7 @@
 package com.github.shenziq1.fortherecord.ui.screen.routine
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -12,9 +10,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.ui.common.TopBackBar
+import com.github.shenziq1.fortherecord.ui.theme.Green100
 import com.github.shenziq1.fortherecord.ui.viewmodel.task.TaskDetailViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -52,12 +52,12 @@ fun RoutineDetailScreen(
         })
     }) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().padding(it),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceEvenly
         ) {
-            Text(text = taskUiState.value.name)
-            Text(text = (timeSpent / 1000L).toString(), fontSize = 36.sp)
+            Text(text = taskUiState.value.name, fontSize = 28.sp)
+            Text(text = (timeSpent / 1000L).toString(), fontSize = 72.sp)
             FloatingActionButton(onClick = {
                 when (isRunning) {
                     true -> {

@@ -1,6 +1,5 @@
 package com.github.shenziq1.fortherecord.ui.screen.routine
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -31,14 +30,19 @@ fun RoutineEditScreen(
     val keyboardController = LocalSoftwareKeyboardController.current
     val taskUiState = viewModel.taskUiState.collectAsState()
 
-//    var name by remember {
-//        mutableStateOf(taskUiState.value.name)
-//    }
+    var name by remember {
+        mutableStateOf("")
+    }
     var timeGoal by remember {
         mutableStateOf("")
     }
 
-    Scaffold(topBar = { TopBackBar(onClick = { navHostController.popBackStack() }) }) {
+    Scaffold(
+        topBar = { TopBackBar(onClick = { navHostController.popBackStack() }) },
+//        bottomBar = { BottomAppBar() {
+//            Spacer(modifier = Modifier.height(56.dp))
+//        } }
+    ) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
@@ -46,9 +50,10 @@ fun RoutineEditScreen(
         ) {
             Text(text = "Let's change name to ")
             OutlinedTextField(
-                value = taskUiState.value.name,
+                value = name,
                 singleLine = true,
                 label = { Text(text = "name") },
+                placeholder = { Text(text = taskUiState.value.name) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Ascii,
                     imeAction = ImeAction.Next
@@ -58,7 +63,7 @@ fun RoutineEditScreen(
                         keyboardController?.hide()
                     }),
                 onValueChange = {
-                    viewModel.setNewTaskName(name = it)
+                    name = it
                 },
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Blue300,
@@ -70,6 +75,7 @@ fun RoutineEditScreen(
                 value = timeGoal,
                 singleLine = true,
                 label = { Text(text = "goal") },
+                placeholder = { Text(text = (taskUiState.value.timeGoal / 1000).toString()) },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done
@@ -80,7 +86,6 @@ fun RoutineEditScreen(
                     }),
                 onValueChange = {
                     timeGoal = it
-                    viewModel.setNewTaskGoal(timeGoal = timeGoal.toLong() * 1000)
                 },
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Blue300,
@@ -89,6 +94,8 @@ fun RoutineEditScreen(
             )
             Spacer(modifier = Modifier.height(40.dp))
             Button(onClick = {
+                viewModel.setNewTaskName(name = name)
+                viewModel.setNewTaskGoal(timeGoal = timeGoal.toLong() * 1000)
                 //focusManager.moveFocus(FocusDirection.Down)
                 navHostController.popBackStack()
             }) {

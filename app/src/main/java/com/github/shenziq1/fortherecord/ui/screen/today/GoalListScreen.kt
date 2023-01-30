@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -33,15 +34,12 @@ fun GoalListScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Title(text = "Goal")
-//                        IconButton(onClick = { ) {
-//                            Icon(imageVector = Icons.Default.Menu, contentDescription = "")
-//                        }
                         FloatingActionButton(
                             onClick = {},
                             modifier = Modifier.size(36.dp)
                         ) {
                             Icon(
-                                imageVector = Icons.Default.Share,
+                                imageVector = Icons.Default.Add,
                                 contentDescription = "",
                                 tint = MaterialTheme.colors.onPrimary
                             )

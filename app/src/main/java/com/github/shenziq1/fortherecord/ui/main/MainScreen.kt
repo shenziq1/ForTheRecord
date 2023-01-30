@@ -1,13 +1,14 @@
 package com.github.shenziq1.fortherecord.ui.main
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -16,23 +17,40 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.github.shenziq1.fortherecord.ui.screen.today.GoalListScreen
-import com.github.shenziq1.fortherecord.ui.screen.settings.SettingsScreen
 import com.github.shenziq1.fortherecord.ui.screen.insights.InsightsScreen
 import com.github.shenziq1.fortherecord.ui.screen.routine.RoutineDetailScreen
 import com.github.shenziq1.fortherecord.ui.screen.routine.RoutineEditScreen
 import com.github.shenziq1.fortherecord.ui.screen.routine.RoutineListScreen
 import com.github.shenziq1.fortherecord.ui.screen.routine.RoutineNewScreen
+import com.github.shenziq1.fortherecord.ui.screen.settings.SettingsScreen
+import com.github.shenziq1.fortherecord.ui.screen.today.GoalListScreen
+import com.github.shenziq1.fortherecord.ui.theme.Blue50
+import com.google.accompanist.navigation.animation.AnimatedNavHost
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun MainScreen(navHostController: NavHostController) {
-    Scaffold(bottomBar = { BottomNavigationBar(navHostController = navHostController) }) { it ->
+    val items = listOf(
+        "RoutineHome",
+        "TodayHome",
+        "InsightsHome",
+        "SettingsHome"
+    )
+    val navBackStackEntry by navHostController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+
+    Scaffold(bottomBar = {
+        if (items.contains(currentDestination?.route))
+            BottomNavigationBar(navHostController = navHostController)
+        else Spacer(modifier = Modifier.height(56.dp))
+        //BottomNavigationBar(navHostController = navHostController)
+    }) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
         ) {
-            NavHost(navController = navHostController, startDestination = "Routine") {
+            NavHost(navController =  navHostController, startDestination = "Routine") {
                 navigation(startDestination = "RoutineHome", route = "Routine") {
                     composable("RoutineHome") {
                         RoutineListScreen(navHostController = navHostController)
@@ -44,7 +62,7 @@ fun MainScreen(navHostController: NavHostController) {
                         route = "RoutineDetail/{taskId}",
                         arguments = listOf(navArgument("taskId") {
                             type = NavType.IntType
-                        })
+                        }),
                     ) {
                         RoutineDetailScreen(navHostController = navHostController)
                     }
@@ -96,12 +114,14 @@ fun BottomNavigationBar(navHostController: NavHostController) {
                 selected = currentDestination?.hierarchy?.any() { it.route == item.first } == true,
                 onClick = { navHostController.navigate(item.first) },
                 label = { Text(text = item.first) },
-                icon = { Icon(
-                    //modifier = Modifier.size(10.dp),
-                    painter = painterResource(id = item.second),
-                    contentDescription = "",
-                    //tint = Color.Black
-                )}
+                icon = {
+                    Icon(
+                        //modifier = Modifier.size(10.dp),
+                        painter = painterResource(id = item.second),
+                        contentDescription = "",
+                        //tint = Color.Black
+                    )
+                }
             )
         }
     }
