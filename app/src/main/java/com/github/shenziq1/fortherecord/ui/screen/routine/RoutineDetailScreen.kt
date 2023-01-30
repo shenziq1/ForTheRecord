@@ -30,6 +30,9 @@ fun RoutineDetailScreen(
     var timeSpent by remember {
         mutableStateOf(0L)
     }
+    var singleTimeSpent by remember {
+        mutableStateOf(0L)
+    }
     var isRunning by remember {
         mutableStateOf(false)
     }
@@ -59,7 +62,9 @@ fun RoutineDetailScreen(
                 when (isRunning) {
                     true -> {
                         isRunning = false
-                        viewModel.addTaskTimeSpent(timeSpent)
+                        viewModel.addTaskTimeSpent(singleTimeSpent)
+                        singleTimeSpent = 0L
+
                     }
                     false -> {
                         isRunning = true
@@ -67,6 +72,7 @@ fun RoutineDetailScreen(
                             delay(1000L)
                             while (isRunning) {
                                 timeSpent += 1000L
+                                singleTimeSpent += 1000L
                                 delay(1000L)
                             }
                         }

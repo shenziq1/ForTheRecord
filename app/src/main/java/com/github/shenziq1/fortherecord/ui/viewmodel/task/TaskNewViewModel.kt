@@ -5,8 +5,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.github.shenziq1.fortherecord.repository.OfflineRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -15,7 +17,6 @@ class TaskNewViewModel @Inject constructor(
 ) : ViewModel() {
 
     var taskUiState: TaskUiState by mutableStateOf(TaskUiState())
-        private set
 
     fun setNewTaskName(name: String){
         taskUiState = taskUiState.copy(name = name)
@@ -25,10 +26,9 @@ class TaskNewViewModel @Inject constructor(
         taskUiState = taskUiState.copy(timeGoal = timeGoal)
     }
 
-    suspend fun saveNewTask() {
-        if (taskUiState.isValid()) {
+    fun saveNewTask() {
+        viewModelScope.launch {
             offlineRepository.insert(taskUiState.toTask())
-            Log.d("insert", taskUiState.toTask().name)
         }
     }
 }

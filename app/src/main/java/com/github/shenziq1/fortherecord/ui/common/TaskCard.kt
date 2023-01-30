@@ -2,6 +2,7 @@ package com.github.shenziq1.fortherecord.ui.common
 
 import android.util.Log
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -16,8 +17,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.database.Task
+import com.github.shenziq1.fortherecord.ui.theme.Blue50
+import com.github.shenziq1.fortherecord.ui.theme.Orange300
+import com.github.shenziq1.fortherecord.ui.theme.Teal100
 import com.github.shenziq1.fortherecord.ui.theme.Teal200
 import com.github.shenziq1.fortherecord.ui.viewmodel.task.TaskListViewModel
+import kotlin.math.max
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -62,7 +67,7 @@ fun SwipableTaskCard(
                 DismissDirection.StartToEnd -> {
                     Card(modifier = Modifier
                         .fillMaxWidth()
-                        .height(80.dp), backgroundColor = Color.Red) {
+                        .height(80.dp), backgroundColor = Orange300) {
                         Row(Modifier.padding(20.dp, 0.dp),
                             verticalAlignment = Alignment.CenterVertically){
                             Icon(
@@ -79,7 +84,7 @@ fun SwipableTaskCard(
                 DismissDirection.EndToStart -> {
                     Card(modifier = Modifier
                         .fillMaxWidth()
-                        .height(80.dp), backgroundColor = Color.Green) {
+                        .height(80.dp), backgroundColor = Teal100) {
                         Row(Modifier.padding(20.dp, 0.dp),
                             horizontalArrangement = Arrangement.End,
                             verticalAlignment = Alignment.CenterVertically){
@@ -103,11 +108,27 @@ fun SwipableTaskCard(
                 navHostController.navigate(route)
                 viewModel.updateTask(currentTask.copy(clickTimes = currentTask.clickTimes + 1))
             },
-            backgroundColor = Teal200,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(80.dp),
+            shape = RoundedCornerShape(5)
         ) {
+            val ratio = max(1F - (task.timeSpent.toDouble() / task.timeGoal).toFloat(), 0F)
+            Row{
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth(ratio)
+                        .height(80.dp),
+                    shape = RoundedCornerShape(5)
+                ) {}
+                Card(
+                    backgroundColor = Blue50,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(80.dp),
+                    shape = RoundedCornerShape(0, 5, 5, 0)
+                ) {}
+            }
             Row(
                 modifier = Modifier,
                 verticalAlignment = Alignment.CenterVertically,
@@ -121,6 +142,5 @@ fun SwipableTaskCard(
                 Text(text = (task.timeGoal / 1000).toString(), modifier = Modifier.padding(20.dp, 0.dp))
             }
         }
-        Log.d("where", currentTask.name)
     }
 }

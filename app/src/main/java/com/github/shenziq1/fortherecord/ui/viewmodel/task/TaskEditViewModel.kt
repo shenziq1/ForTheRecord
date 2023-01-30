@@ -9,8 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.shenziq1.fortherecord.repository.OfflineRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,35 +19,50 @@ class TaskEditViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val taskId = savedStateHandle.get<Int>("taskId")?:0
-    var taskUiState: TaskUiState by mutableStateOf(TaskUiState())
-        private set
+//    var taskUiState: TaskUiState by mutableStateOf(TaskUiState())
+//        private set
 
-    private suspend fun getUiState(id: Int) {
-        val task = offlineRepository.getTask(id).filterNotNull().first()
-        taskUiState = task.toTaskUiState()
+    var taskUiState: StateFlow<TaskUiState> =
+        offlineRepository.getTask(taskId).filterNotNull().map {
+            it.toTaskUiState()
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000L),
+            initialValue = TaskUiState()
+        )
 
-    }
+//    private suspend fun getUiState(id: Int) {
+//        val task = offlineRepository.getTask(id).filterNotNull().first()
+//        taskUiState = task.toTaskUiState()
+//
+//    }
 
-    init {
-        viewModelScope.launch {
-            getUiState(taskId)
-        }
-    }
+//    init {
+//        viewModelScope.launch {
+//            getUiState(taskId)
+//        }
+//    }
 
     fun setNewTaskName(name: String){
-        taskUiState = taskUiState.copy(name = name)
+        val task = taskUiState.value.toTask().copy(name = name)
+        viewModelScope.launch {
+            offlineRepository.update(task)
+        }
+
+
     }
 
     fun setNewTaskGoal(timeGoal: Long){
-        taskUiState = taskUiState.copy(timeGoal = timeGoal)
-    }
-
-    fun saveEditedTask() {
+        val task = taskUiState.value.toTask().copy(timeGoal = timeGoal)
         viewModelScope.launch {
-            if (taskUiState.isValid()) {
-                offlineRepository.update(taskUiState.toTask())
-            }
+            offlineRepository.update(task)
         }
     }
+
+//    fun saveEditedTask() {
+//        viewModelScope.launch {
+//            offlineRepository.update(taskUiState.toTask())
+//        }
+//    }
 }
 

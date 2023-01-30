@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.github.shenziq1.fortherecord.database.Task
+import com.github.shenziq1.fortherecord.ui.theme.Blue50
 import com.github.shenziq1.fortherecord.ui.theme.Teal200
 import kotlin.math.max
 
@@ -49,17 +50,13 @@ fun GoalCard(task: Task) {
                 .height(80.dp)
         ) {
             Card(
-                onClick = {
-                },
-                backgroundColor = Teal200,
                 modifier = Modifier
                     .fillMaxWidth(ratio)
                     .height(80.dp),
                 shape = RoundedCornerShape(5, 0, 0, 5)
             ) {}
             Card(
-                onClick = {
-                },
+                backgroundColor = Blue50,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(80.dp),
