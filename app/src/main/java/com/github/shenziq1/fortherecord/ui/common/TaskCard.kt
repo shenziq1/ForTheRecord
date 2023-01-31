@@ -53,14 +53,14 @@ fun SwipableTaskCard(
         })
     var offsetY by remember { mutableStateOf(0f) }
     SwipeToDismiss(
-        modifier = Modifier
-            .offset { IntOffset(0, offsetY.roundToInt()) }
-            .draggable(
-                orientation = Orientation.Vertical,
-                state = rememberDraggableState { delta ->
-                    offsetY += delta
-                }
-            ),
+        modifier = Modifier,
+//            .offset { IntOffset(0, offsetY.roundToInt()) }
+//            .draggable(
+//                orientation = Orientation.Vertical,
+//                state = rememberDraggableState { delta ->
+//                    offsetY += delta
+//                }
+//            ),
 //        modifier = Modifier,
 
         state = state,
