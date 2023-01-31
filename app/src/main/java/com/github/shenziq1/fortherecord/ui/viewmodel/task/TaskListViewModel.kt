@@ -13,18 +13,27 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class TaskListUiState(val taskList: List<Task> = listOf())
+//data class TaskListUiState(val taskList: List<Task> = listOf())
+
+data class TaskListUiState(val taskMap: Map<Task, List<Task>> = mapOf())
 
 @HiltViewModel
 class TaskListViewModel @Inject constructor(private val offlineRepository: OfflineRepository) :
     ViewModel() {
-    val taskListUiState: StateFlow<TaskListUiState> = offlineRepository.getAllTasks().map {
-        TaskListUiState(it)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000L),
-        initialValue = TaskListUiState()
-    )
+//    val taskListUiState: StateFlow<TaskListUiState> = offlineRepository.getTaskOrderByCategory().map {
+//        TaskListUiState(it)
+//    }.stateIn(
+//        scope = viewModelScope,
+//        started = SharingStarted.WhileSubscribed(5000L),
+//        initialValue = TaskListUiState()
+//    )
+val taskListUiState: StateFlow<TaskListUiState> = offlineRepository.getTaskGroupByCategory().map {
+    TaskListUiState(it)
+}.stateIn(
+    scope = viewModelScope,
+    started = SharingStarted.WhileSubscribed(5000L),
+    initialValue = TaskListUiState()
+)
 
     fun deleteTask(task: Task){
         viewModelScope.launch {
@@ -38,11 +47,11 @@ class TaskListViewModel @Inject constructor(private val offlineRepository: Offli
         }
     }
 
-    fun shuffle(){
-        viewModelScope.launch {
-            val newTaskList = taskListUiState.value.taskList.shuffled()
-            offlineRepository.deleteAll(taskListUiState.value.taskList)
-            offlineRepository.insertAll(newTaskList)
-        }
-    }
+//    fun shuffle(){
+//        viewModelScope.launch {
+//            val newTaskList = taskListUiState.value.taskList.shuffled()
+//            offlineRepository.deleteAll(taskListUiState.value.taskList)
+//            offlineRepository.insertAll(newTaskList)
+//        }
+//    }
 }

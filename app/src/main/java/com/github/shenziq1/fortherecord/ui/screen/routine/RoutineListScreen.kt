@@ -5,15 +5,12 @@ package com.github.shenziq1.fortherecord.ui.screen.routine
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -26,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.database.Task
+import com.github.shenziq1.fortherecord.ui.common.CardCollection
 import com.github.shenziq1.fortherecord.ui.common.SwipableTaskCard
 import com.github.shenziq1.fortherecord.ui.common.Title
 import com.github.shenziq1.fortherecord.ui.viewmodel.task.TaskListViewModel
@@ -69,33 +67,59 @@ fun RoutineListScreen(
         },
     )
     {
-        val taskList = taskListUiState.taskList
-        val shuffled = taskList.toMutableList()
-        val shuffled2 = remember{ mutableStateListOf<Task>() }
-        shuffled2.clear()
-        shuffled2.addAll(shuffled)
-        when (taskList.size) {
+        val taskMap = taskListUiState.taskMap
+        when (taskMap.size) {
             0 -> Text(text = "no content")
-            else -> LazyColumn(
-                Modifier
-                    .padding(it)
-                    ) {
-                items(items = shuffled2, key = { task -> task.id }) { task ->
-
-                    SwipableTaskCard(task = task, navHostController = navHostController)
-                }
-                item {
-                    Button(onClick = {
-                        shuffled.shuffle()
-                        shuffled2.clear()
-                        shuffled2.addAll(shuffled)
-                        Log.d("shuffle", shuffled2[0].name)
-                    }) {
-                        Text(text = "shuffle")
+            else -> {
+                val taskCategory: List<Task> = taskMap.keys.toList()
+                LazyColumn(Modifier.padding(it)) {
+                    items(items = taskCategory, key = {task: Task -> task.id}) {
+                        task ->
+                        taskMap[task]?.let { it1 -> CardCollection(tasks = it1, navHostController = navHostController) }
                     }
                 }
+//                Column(Modifier.padding(it)) {
+//                    taskCategory.forEach {
+//                        taskMap[it]?.let { it1 -> CardCollection(tasks = it1, navHostController = navHostController) }
+//
+//                    }
+//                }
             }
         }
+
+
+//        val taskList = taskListUiState.taskList
+//
+//        val shuffled = taskList.toMutableList()
+//        val shuffled2 = remember{ mutableStateListOf<Task>() }
+//        shuffled2.clear()
+//        shuffled2.addAll(shuffled)
+//        when (taskList.size) {
+//            0 -> Text(text = "no content")
+//            else -> LazyColumn(
+//                Modifier
+//                    .padding(it)
+//                    ) {
+//                items(items = shuffled2, key = { task -> task.id }) { task ->
+//
+//                    SwipableTaskCard(task = task, navHostController = navHostController)
+//                }
+//                item {
+//                    Button(onClick = {
+//                        shuffled.shuffle()
+//                        shuffled2.clear()
+//                        shuffled2.addAll(shuffled)
+//                        Log.d("shuffle", shuffled2[0].name)
+//                    }) {
+//                        Text(text = "shuffle")
+//                    }
+//                }
+//            }
+//        }
+
+
+        //Their drag and drop
+
 //        val data = remember { mutableStateOf(taskList) }
 //        val state = rememberReorderableLazyListState(onMove = { from, to ->
 //            data.value = data.value.toMutableList().apply {

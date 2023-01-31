@@ -52,14 +52,6 @@ fun GoalListScreen(
         },
     )
     {
-        val taskList = taskListUiState.taskList
-        when (taskList.size) {
-            0 -> Text(text = "no content")
-            else -> LazyColumn() {
-                items(items = taskList, key = { task -> task.id }) { task ->
-                    GoalCard(task = task)
-                }
-            }
-        }
+        Spacer(modifier = Modifier.padding(it))
     }
 }

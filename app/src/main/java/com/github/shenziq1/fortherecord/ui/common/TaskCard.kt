@@ -150,6 +150,7 @@ fun SwipableTaskCard(
                     modifier = Modifier.padding(20.dp, 0.dp)
                 )
                 Text(text = (task.timeGoal / 1000).toString(), modifier = Modifier.padding(20.dp, 0.dp))
+                Text(text = task.category)
             }
         }
     }

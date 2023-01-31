@@ -5,7 +5,7 @@ import com.github.shenziq1.fortherecord.database.Task
 data class TaskUiState(
     val id: Int = 0,
     var name: String = "",
-    val category: String = "",
+    val category: String = "default",
     val timeSpent: Long = 0L,
     val timeGoal: Long = 0L,
     val clickTimes: Int = 0,

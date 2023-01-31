@@ -26,6 +26,10 @@ class TaskNewViewModel @Inject constructor(
         taskUiState = taskUiState.copy(timeGoal = timeGoal)
     }
 
+    fun setNewTaskCategory(category: String){
+        taskUiState = taskUiState.copy(category = category)
+    }
+
     fun saveNewTask() {
         viewModelScope.launch {
             offlineRepository.insert(taskUiState.toTask())

@@ -36,6 +36,10 @@ fun RoutineNewScreen(
         mutableStateOf("")
     }
 
+    var category by remember{
+        mutableStateOf("")
+    }
+
     Scaffold(
         topBar = {
             TopBackBar(onClick = {navHostController.popBackStack()})
@@ -75,15 +79,40 @@ fun RoutineNewScreen(
                 label = { Text(text = "goal") },
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
+                    imeAction = ImeAction.Next
+                ),
+                keyboardActions = KeyboardActions(
+//                    onNext = {
+//                        keyboardController?.hide()
+//                    }
+                ),
+
+                onValueChange = {
+                    timeGoal = it
+                    viewModel.setNewTaskGoal(timeGoal = timeGoal.toLong() * 1000)
+                },
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    focusedBorderColor = Blue300,
+                    unfocusedBorderColor = Blue400
+                )
+            )
+            Text(text = "Let's give it a category")
+            OutlinedTextField(
+                value = category,
+                singleLine = true,
+                label = { Text(text = "category") },
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Ascii,
                     imeAction = ImeAction.Done
                 ),
                 keyboardActions = KeyboardActions(
                     onDone = {
                         keyboardController?.hide()
                     }),
+
                 onValueChange = {
-                    timeGoal = it
-                    viewModel.setNewTaskGoal(timeGoal = timeGoal.toLong() * 1000)
+                    category = it
+                    viewModel.setNewTaskCategory(category = category)
                 },
                 colors = TextFieldDefaults.outlinedTextFieldColors(
                     focusedBorderColor = Blue300,

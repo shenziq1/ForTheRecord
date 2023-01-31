@@ -13,6 +13,12 @@ interface TaskDao {
     @Query("SELECT * FROM taskTable")
     fun getAll(): Flow<List<Task>>
 
+    @Query("SELECT * FROM taskTable ORDER BY category")
+    fun getAllOrderByCategory(): Flow<List<Task>>
+
+    @Query("SELECT * FROM taskTable GROUP BY category")
+    fun getAllGroupByCategory(): Flow<Map<Task, List<Task>>>
+
     @Query("SELECT * FROM taskTable WHERE id == :id")
     fun getTask(id: Int): Flow<Task>
 

@@ -11,6 +11,10 @@ import kotlinx.coroutines.flow.flowOf
 interface Repository {
     fun getAllTasks(): Flow<List<Task>>
     fun getTask(taskId: Int): Flow<Task>
+
+    fun getTaskOrderByCategory(): Flow<List<Task>>
+
+    fun getTaskGroupByCategory(): Flow<Map<Task, List<Task>>>
     suspend fun insert(task: Task)
     suspend fun delete(task: Task)
     suspend fun update(task: Task)
@@ -18,6 +22,8 @@ interface Repository {
     suspend fun insertAll(tasks: List<Task>)
 
     suspend fun deleteAll(tasks: List<Task>)
+
+
 
 }
 
@@ -51,6 +57,14 @@ interface Repository {
 class OfflineRepository(val taskDao: TaskDao): Repository{
     override fun getAllTasks(): Flow<List<Task>> {
         return taskDao.getAll()
+    }
+
+    override fun getTaskOrderByCategory(): Flow<List<Task>> {
+        return taskDao.getAllOrderByCategory()
+    }
+
+    override fun getTaskGroupByCategory(): Flow<Map<Task, List<Task>>> {
+        return taskDao.getAllGroupByCategory()
     }
 
 //    (): List<Task> {
