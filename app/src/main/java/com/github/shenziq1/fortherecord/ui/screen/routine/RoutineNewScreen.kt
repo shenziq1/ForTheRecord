@@ -41,7 +41,7 @@ fun RoutineNewScreen(
             TopBackBar(onClick = {navHostController.popBackStack()})
         }) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().padding(it),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -55,9 +55,10 @@ fun RoutineNewScreen(
                     imeAction = ImeAction.Next
                 ),
                 keyboardActions = KeyboardActions(
-                    onNext = {
-                        keyboardController?.hide()
-                    }),
+//                    onNext = {
+//                        keyboardController?.hide()
+//                    }
+                ),
                 onValueChange = {
                     name = it
                     viewModel.setNewTaskName(name = name)

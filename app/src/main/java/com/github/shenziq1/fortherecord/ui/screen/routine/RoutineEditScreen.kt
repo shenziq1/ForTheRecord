@@ -44,7 +44,7 @@ fun RoutineEditScreen(
 //        } }
     ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().padding(it),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -59,9 +59,10 @@ fun RoutineEditScreen(
                     imeAction = ImeAction.Next
                 ),
                 keyboardActions = KeyboardActions(
-                    onNext = {
-                        keyboardController?.hide()
-                    }),
+//                    onNext = {
+//                        keyboardController?.hide()
+//                    }
+                ),
                 onValueChange = {
                     name = it
                 },

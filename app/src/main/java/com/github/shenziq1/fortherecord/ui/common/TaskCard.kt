@@ -1,18 +1,20 @@
 package com.github.shenziq1.fortherecord.ui.common
 
 import android.util.Log
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -23,6 +25,7 @@ import com.github.shenziq1.fortherecord.ui.theme.Teal100
 import com.github.shenziq1.fortherecord.ui.theme.Teal200
 import com.github.shenziq1.fortherecord.ui.viewmodel.task.TaskListViewModel
 import kotlin.math.max
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -39,20 +42,27 @@ fun SwipableTaskCard(
             when (it) {
                 DismissValue.DismissedToEnd -> {
                     viewModel.deleteTask(currentTask)
-                    Log.d("viewmodel9", "I should be dismissed")
                     true
                 }
                 DismissValue.DismissedToStart -> {
                     navHostController.navigate("RoutineEdit/${currentTask.id}")
-                    Log.d("viewmodel9", "I am at edit now")
                     false
                 }
                 else -> {false}
             }
         })
-
+    var offsetY by remember { mutableStateOf(0f) }
     SwipeToDismiss(
-        modifier = Modifier,
+        modifier = Modifier
+            .offset { IntOffset(0, offsetY.roundToInt()) }
+            .draggable(
+                orientation = Orientation.Vertical,
+                state = rememberDraggableState { delta ->
+                    offsetY += delta
+                }
+            ),
+//        modifier = Modifier,
+
         state = state,
         directions = setOf(DismissDirection.EndToStart, DismissDirection.StartToEnd),
         dismissThresholds = {

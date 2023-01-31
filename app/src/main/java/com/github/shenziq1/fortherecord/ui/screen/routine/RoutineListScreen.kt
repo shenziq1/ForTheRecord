@@ -1,5 +1,6 @@
 package com.github.shenziq1.fortherecord.ui.screen.routine
 
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -56,7 +57,7 @@ fun RoutineListScreen(
         val taskList = taskListUiState.taskList
         when (taskList.size){
             0 -> Text(text = "no content")
-            else -> LazyColumn() {
+            else -> LazyColumn(Modifier.padding(it)) {
                 items(items = taskList, key = {task -> task.id}) {
                     task -> SwipableTaskCard(task = task, navHostController =navHostController)
                 }
