@@ -56,7 +56,7 @@ fun RoutineListScreen(
         val taskList = taskListUiState.taskList
         when (taskList.size){
             0 -> Text(text = "no content")
-            else -> LazyColumn() {
+            else -> LazyColumn(Modifier.padding(it)) {
                 items(items = taskList, key = {task -> task.id}) {
                     task -> SwipableTaskCard(task = task, navHostController =navHostController)
                 }

@@ -41,7 +41,7 @@ fun RoutineNewScreen(
             TopBackBar(onClick = {navHostController.popBackStack()})
         }) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().padding(it),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
