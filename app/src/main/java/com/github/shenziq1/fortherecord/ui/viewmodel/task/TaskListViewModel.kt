@@ -1,5 +1,6 @@
 package com.github.shenziq1.fortherecord.ui.viewmodel.task
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.shenziq1.fortherecord.database.Task
@@ -34,6 +35,14 @@ class TaskListViewModel @Inject constructor(private val offlineRepository: Offli
     fun updateTask(task: Task){
         viewModelScope.launch {
             offlineRepository.update(task)
+        }
+    }
+
+    fun shuffle(){
+        viewModelScope.launch {
+            val newTaskList = taskListUiState.value.taskList.shuffled()
+            offlineRepository.deleteAll(taskListUiState.value.taskList)
+            offlineRepository.insertAll(newTaskList)
         }
     }
 }

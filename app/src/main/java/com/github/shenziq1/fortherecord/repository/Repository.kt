@@ -15,6 +15,10 @@ interface Repository {
     suspend fun delete(task: Task)
     suspend fun update(task: Task)
 
+    suspend fun insertAll(tasks: List<Task>)
+
+    suspend fun deleteAll(tasks: List<Task>)
+
 }
 
 //class FakeRepository(): Repository{
@@ -63,8 +67,20 @@ class OfflineRepository(val taskDao: TaskDao): Repository{
         taskDao.insert(task)
     }
 
+    override suspend fun insertAll(tasks: List<Task>) {
+        tasks.forEach {
+            taskDao.insert(it)
+        }
+    }
+
     override suspend fun delete(task: Task) {
         taskDao.delete(task)
+    }
+
+    override suspend fun deleteAll(tasks: List<Task>) {
+        tasks.forEach {
+            taskDao.delete(it)
+        }
     }
 
     override suspend fun update(task: Task) {
