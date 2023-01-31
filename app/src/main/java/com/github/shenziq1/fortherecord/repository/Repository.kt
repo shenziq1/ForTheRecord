@@ -12,6 +12,8 @@ interface Repository {
     fun getAllTasks(): Flow<List<Task>>
     fun getTask(taskId: Int): Flow<Task>
 
+    fun getAllTasksReversed(): Flow<List<Task>>
+
     fun getTaskOrderByCategory(): Flow<List<Task>>
 
     fun getTaskGroupByCategory(): Flow<Map<Task, List<Task>>>
@@ -59,6 +61,9 @@ class OfflineRepository(val taskDao: TaskDao): Repository{
         return taskDao.getAll()
     }
 
+    override fun getAllTasksReversed(): Flow<List<Task>> {
+        return taskDao.getAllReversed()
+    }
     override fun getTaskOrderByCategory(): Flow<List<Task>> {
         return taskDao.getAllOrderByCategory()
     }

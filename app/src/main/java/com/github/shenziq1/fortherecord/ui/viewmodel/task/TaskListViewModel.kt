@@ -1,6 +1,5 @@
 package com.github.shenziq1.fortherecord.ui.viewmodel.task
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.shenziq1.fortherecord.database.Task
@@ -13,9 +12,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-//data class TaskListUiState(val taskList: List<Task> = listOf())
+data class TaskListUiState(val taskList: List<Task> = listOf())
 
-data class TaskListUiState(val taskMap: Map<Task, List<Task>> = mapOf())
+data class TaskMapUiState(val taskMap: Map<String, List<Task>> = mapOf())
 
 @HiltViewModel
 class TaskListViewModel @Inject constructor(private val offlineRepository: OfflineRepository) :
@@ -27,12 +26,12 @@ class TaskListViewModel @Inject constructor(private val offlineRepository: Offli
 //        started = SharingStarted.WhileSubscribed(5000L),
 //        initialValue = TaskListUiState()
 //    )
-val taskListUiState: StateFlow<TaskListUiState> = offlineRepository.getTaskGroupByCategory().map {
-    TaskListUiState(it)
+val taskMapUiState: StateFlow<TaskMapUiState> = offlineRepository.getAllTasksReversed().map {
+    TaskMapUiState(it.groupBy { it.category })
 }.stateIn(
     scope = viewModelScope,
     started = SharingStarted.WhileSubscribed(5000L),
-    initialValue = TaskListUiState()
+    initialValue = TaskMapUiState()
 )
 
     fun deleteTask(task: Task){

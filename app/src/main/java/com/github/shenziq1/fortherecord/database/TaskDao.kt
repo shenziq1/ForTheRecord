@@ -13,6 +13,9 @@ interface TaskDao {
     @Query("SELECT * FROM taskTable")
     fun getAll(): Flow<List<Task>>
 
+    @Query("SELECT * FROM taskTable ORDER BY id DESC")
+    fun getAllReversed(): Flow<List<Task>>
+
     @Query("SELECT * FROM taskTable ORDER BY category")
     fun getAllOrderByCategory(): Flow<List<Task>>
 

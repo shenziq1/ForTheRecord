@@ -2,42 +2,34 @@
 
 package com.github.shenziq1.fortherecord.ui.screen.routine
 
-import android.annotation.SuppressLint
+import android.os.Build
 import android.util.Log
-import androidx.compose.animation.core.animateDpAsState
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.database.Task
-import com.github.shenziq1.fortherecord.ui.common.CardCollection
 import com.github.shenziq1.fortherecord.ui.common.SwipableTaskCard
 import com.github.shenziq1.fortherecord.ui.common.Title
 import com.github.shenziq1.fortherecord.ui.viewmodel.task.TaskListViewModel
-import org.burnoutcrew.reorderable.ReorderableItem
-import org.burnoutcrew.reorderable.detectReorderAfterLongPress
-import org.burnoutcrew.reorderable.rememberReorderableLazyListState
-import org.burnoutcrew.reorderable.reorderable
 
+@RequiresApi(Build.VERSION_CODES.N)
 @Composable
 fun RoutineListScreen(
     navHostController: NavHostController,
     viewModel: TaskListViewModel = hiltViewModel()
 ) {
-    val taskListUiState by viewModel.taskListUiState.collectAsState()
+    val taskListUiState by viewModel.taskMapUiState.collectAsState()
 
     Scaffold(
         topBar = {
@@ -66,17 +58,28 @@ fun RoutineListScreen(
             )
         },
     )
-    {
+    { it ->
         val taskMap = taskListUiState.taskMap
+        taskMap.forEach{
+            Log.d("lazy", it.value.size.toString())
+            Log.d("lazy", it.value.size.toString())
+        }
         when (taskMap.size) {
             0 -> Text(text = "no content")
             else -> {
-                val taskCategory: List<Task> = taskMap.keys.toList()
                 LazyColumn(Modifier.padding(it)) {
-                    items(items = taskCategory, key = {task: Task -> task.id}) {
-                        task ->
-                        taskMap[task]?.let { it1 -> CardCollection(tasks = it1, navHostController = navHostController) }
+                    taskMap.forEach { (category, tasks) -> 
+                        stickyHeader { Text(text = category) } 
+                        items(items = tasks, key = {task: Task -> task.id}){
+                            SwipableTaskCard(task = it, navHostController = navHostController)
+                        }
                     }
+
+
+//                    items(items = taskCategory, key = {task: Task -> task.id}) {
+//                        task ->
+//                        taskMap[task]?.let { it1 -> CardCollection(tasks = it1, navHostController = navHostController) }
+//                    }
                 }
 //                Column(Modifier.padding(it)) {
 //                    taskCategory.forEach {
