@@ -1,4 +1,4 @@
-package com.github.shenziq1.fortherecord.ui.viewmodel.task
+package com.github.shenziq1.fortherecord.ui.viewmodel.today
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

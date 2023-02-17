@@ -19,7 +19,7 @@ import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.database.Task
 import com.github.shenziq1.fortherecord.ui.screen.task.SwipableTaskCard
 import com.github.shenziq1.fortherecord.ui.common.Title
-import com.github.shenziq1.fortherecord.ui.viewmodel.task.RoutineListViewModel
+import com.github.shenziq1.fortherecord.ui.viewmodel.routine.RoutineListViewModel
 
 @Composable
 fun RoutineListScreen(

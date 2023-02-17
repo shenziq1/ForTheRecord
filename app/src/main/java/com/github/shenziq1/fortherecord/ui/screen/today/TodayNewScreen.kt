@@ -18,8 +18,7 @@ import com.github.shenziq1.fortherecord.ui.common.TopBackBar
 import com.github.shenziq1.fortherecord.ui.theme.Blue300
 import com.github.shenziq1.fortherecord.ui.theme.Blue400
 
-import com.github.shenziq1.fortherecord.ui.viewmodel.task.RoutineNewViewModel
-import com.github.shenziq1.fortherecord.ui.viewmodel.task.TodayNewViewModel
+import com.github.shenziq1.fortherecord.ui.viewmodel.today.TodayNewViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

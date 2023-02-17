@@ -16,7 +16,14 @@ data class TaskMapUiState(val taskMap: Map<String, List<Task>> = mapOf())
 @HiltViewModel
 class InsightsViewModel @Inject constructor(private val offlineRepository: OfflineRepository) :
     ViewModel() {
-    val taskMapUiState: StateFlow<TaskMapUiState> = offlineRepository.getAllTodayReversed().map { tasks ->
+    val routineMapUiState: StateFlow<TaskMapUiState> = offlineRepository.getAllRoutineReversed().map { tasks ->
+        TaskMapUiState(tasks.groupBy { it.category })
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000L),
+        initialValue = TaskMapUiState()
+    )
+    val todayMapUiState: StateFlow<TaskMapUiState> = offlineRepository.getAllTodayReversed().map { tasks ->
         TaskMapUiState(tasks.groupBy { it.category })
     }.stateIn(
         scope = viewModelScope,

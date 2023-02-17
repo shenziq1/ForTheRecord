@@ -16,7 +16,7 @@ import com.github.shenziq1.fortherecord.database.Task
 import com.github.shenziq1.fortherecord.ui.theme.Blue50
 import com.github.shenziq1.fortherecord.ui.theme.Orange300
 import com.github.shenziq1.fortherecord.ui.theme.Teal100
-import com.github.shenziq1.fortherecord.ui.viewmodel.task.RoutineListViewModel
+import com.github.shenziq1.fortherecord.ui.viewmodel.routine.RoutineListViewModel
 import kotlin.math.max
 
 @OptIn(ExperimentalMaterialApi::class)
