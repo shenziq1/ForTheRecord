@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
-
 data class TaskMapUiState(val taskMap: Map<String, List<Task>> = mapOf())
 
 @HiltViewModel

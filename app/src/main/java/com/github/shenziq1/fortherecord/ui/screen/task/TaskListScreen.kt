@@ -19,14 +19,21 @@ import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.database.Task
 import com.github.shenziq1.fortherecord.ui.screen.task.SwipableTaskCard
 import com.github.shenziq1.fortherecord.ui.common.Title
-import com.github.shenziq1.fortherecord.ui.viewmodel.routine.RoutineListViewModel
+import com.github.shenziq1.fortherecord.ui.navigation.BottomNavigationBar
+import com.github.shenziq1.fortherecord.ui.viewmodel.task.TaskListViewModel
 
 @Composable
-fun RoutineListScreen(
+fun TaskListScreen(
+    destination: String,
     navigateTo: (String) -> Unit,
-    viewModel: RoutineListViewModel = hiltViewModel()
+    navHostController: NavHostController,
+    viewModel: TaskListViewModel = hiltViewModel()
 ) {
-    val taskListUiState by viewModel.routineMapUiState.collectAsState()
+    var taskMap:Map<String, List<Task>> = mapOf()
+    when (destination){
+        "Routine" -> taskMap = viewModel.routineMapUiState.collectAsState().value.taskMap
+        "Today" -> taskMap = viewModel.todayMapUiState.collectAsState().value.taskMap
+    }
 
     Scaffold(
         topBar = {
@@ -54,13 +61,9 @@ fun RoutineListScreen(
                 contentPadding = PaddingValues(20.dp, 0.dp)
             )
         },
+        bottomBar = { BottomNavigationBar(navHostController = navHostController) }
     )
     { it ->
-        val taskMap = taskListUiState.taskMap
-        taskMap.forEach {
-            Log.d("lazy", it.value.size.toString())
-            Log.d("lazy", it.value.size.toString())
-        }
         when (taskMap.size) {
             0 -> Text(text = "no content")
             else -> {

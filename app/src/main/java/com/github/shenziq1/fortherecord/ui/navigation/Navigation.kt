@@ -1,5 +1,6 @@
 package com.github.shenziq1.fortherecord.ui.navigation
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -16,101 +17,85 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.github.shenziq1.fortherecord.ui.screen.insights.InsightsScreen
-import com.github.shenziq1.fortherecord.ui.screen.routine.RoutineListScreen
+import com.github.shenziq1.fortherecord.ui.screen.routine.TaskListScreen
 import com.github.shenziq1.fortherecord.ui.screen.routine.RoutineNewScreen
 import com.github.shenziq1.fortherecord.ui.screen.settings.SettingsScreen
 import com.github.shenziq1.fortherecord.ui.screen.task.TaskDetailScreen
 import com.github.shenziq1.fortherecord.ui.screen.task.TaskEditScreen
-import com.github.shenziq1.fortherecord.ui.screen.today.TodayListScreen
 import com.github.shenziq1.fortherecord.ui.screen.today.TodayNewScreen
 
 @Composable
 fun Navigation(navHostController: NavHostController) {
-    val items = listOf(
-        "RoutineHome",
-        "TodayHome",
-        "InsightsHome",
-        "SettingsHome"
-    )
-    val navBackStackEntry by navHostController.currentBackStackEntryAsState()
-    val currentDestination = navBackStackEntry?.destination
+    NavHost(navController = navHostController, startDestination = "Routine") {
+        navigation(startDestination = "RoutineHome", route = "Routine") {
+            composable("RoutineHome") {
+                TaskListScreen(
+                    destination = "Routine",
+                    navigateTo = { destination -> navHostController.navigate(destination) },
+                    navHostController
+                )
+            }
+            composable("RoutineNew") {
+                RoutineNewScreen(onBackClicked = { navHostController.popBackStack() })
+            }
+            composable(
+                route = "RoutineDetail/{taskId}",
+                arguments = listOf(navArgument("taskId") {
+                    type = NavType.IntType
+                }),
+            ) {
+                TaskDetailScreen(onBackClicked = { navHostController.popBackStack() })
+            }
+            composable(
+                route = "RoutineEdit/{taskId}",
+                arguments = listOf(navArgument("taskId") {
+                    type = NavType.IntType
+                })
+            ) {
+                TaskEditScreen(onBackClicked = { navHostController.popBackStack() })
+            }
 
-    Scaffold(bottomBar = {
-        if (items.contains(currentDestination?.route))
-            BottomNavigationBar(navHostController = navHostController)
-        else Spacer(modifier = Modifier.height(56.dp))
-        //BottomNavigationBar(navHostController = navHostController)
-    }) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
-        ) {
-            NavHost(navController =  navHostController, startDestination = "Routine") {
-                navigation(startDestination = "RoutineHome", route = "Routine") {
-                    composable("RoutineHome") {
-                        RoutineListScreen(navigateTo = {destination -> navHostController.navigate(destination)})
-                    }
-                    composable("RoutineNew") {
-                        RoutineNewScreen(onBackClicked = {navHostController.popBackStack()})
-                    }
-                    composable(
-                        route = "RoutineDetail/{taskId}",
-                        arguments = listOf(navArgument("taskId") {
-                            type = NavType.IntType
-                        }),
-                    ) {
-                        TaskDetailScreen(onBackClicked = {navHostController.popBackStack()})
-                    }
-                    composable(
-                        route = "RoutineEdit/{taskId}",
-                        arguments = listOf(navArgument("taskId") {
-                            type = NavType.IntType
-                        })
-                    ) {
-                        TaskEditScreen(onBackClicked = {navHostController.popBackStack()})
-                    }
+        }
+        navigation(startDestination = "TodayHome", route = "Today") {
+            composable("TodayHome") {
+                TaskListScreen(
+                    destination = "Today",
+                    navigateTo = { destination -> navHostController.navigate(destination) },
+                    navHostController = navHostController
+                )
+            }
+            composable("TodayNew") {
+                TodayNewScreen(onBackClicked = { navHostController.popBackStack() })
+            }
+            composable(
+                route = "TodayDetail/{taskId}",
+                arguments = listOf(navArgument("taskId") {
+                    type = NavType.IntType
+                }),
+            ) {
+                TaskDetailScreen(onBackClicked = { navHostController.popBackStack() })
+            }
+            composable(
+                route = "TodayEdit/{taskId}",
+                arguments = listOf(navArgument("taskId") {
+                    type = NavType.IntType
+                })
+            ) {
+                TaskEditScreen(onBackClicked = { navHostController.popBackStack() })
+            }
 
-                }
-                navigation(startDestination = "TodayHome", route = "Today") {
-                    composable("TodayHome") {
-                        TodayListScreen(navigateTo = {destination -> navHostController.navigate(destination)})
-                    }
-                    composable("TodayNew") {
-                        TodayNewScreen(onBackClicked = {navHostController.popBackStack()})
-                    }
-                    composable(
-                        route = "TodayDetail/{taskId}",
-                        arguments = listOf(navArgument("taskId") {
-                            type = NavType.IntType
-                        }),
-                    ) {
-                        TaskDetailScreen(onBackClicked = {navHostController.popBackStack()})
-                    }
-                    composable(
-                        route = "TodayEdit/{taskId}",
-                        arguments = listOf(navArgument("taskId") {
-                            type = NavType.IntType
-                        })
-                    ) {
-                        TaskEditScreen(onBackClicked = {navHostController.popBackStack()})
-                    }
-
-                }
-                navigation(startDestination = "InsightsHome", route = "Insights") {
-                    composable("InsightsHome") {
-                        InsightsScreen()
-                    }
-                }
-                navigation(startDestination = "SettingsHome", route = "Settings") {
-                    composable("SettingsHome") {
-                        SettingsScreen(navHostController = navHostController)
-                    }
-                }
+        }
+        navigation(startDestination = "InsightsHome", route = "Insights") {
+            composable("InsightsHome") {
+                InsightsScreen(navHostController = navHostController)
+            }
+        }
+        navigation(startDestination = "SettingsHome", route = "Settings") {
+            composable("SettingsHome") {
+                SettingsScreen(navHostController = navHostController)
             }
         }
     }
-
 }
 
 @Composable
@@ -123,9 +108,11 @@ fun BottomNavigationBar(navHostController: NavHostController) {
     )
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
+    //Log.d("Navigation", "BottomNavigationBar: ${currentDestination?.hierarchy?.iterator()}")
 
     BottomNavigation() {
         items.forEach { item ->
+
             BottomNavigationItem(
                 selected = currentDestination?.hierarchy?.any() { it.route == item.first } == true,
                 onClick = { navHostController.navigate(item.first) },
