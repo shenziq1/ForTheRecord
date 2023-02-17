@@ -1,4 +1,4 @@
-package com.github.shenziq1.fortherecord.ui.screen.routine
+package com.github.shenziq1.fortherecord.ui.screen.task
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
@@ -14,7 +14,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.ui.common.TopBackBar
 import com.github.shenziq1.fortherecord.ui.theme.Blue300
 import com.github.shenziq1.fortherecord.ui.theme.Blue400
@@ -22,7 +21,7 @@ import com.github.shenziq1.fortherecord.ui.viewmodel.task.TaskEditViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun RoutineEditScreen(
+fun TaskEditScreen(
     onBackClicked: () -> Unit,
     viewModel: TaskEditViewModel = hiltViewModel()
 ) {

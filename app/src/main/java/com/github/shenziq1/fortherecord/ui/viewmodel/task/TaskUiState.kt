@@ -9,6 +9,8 @@ data class TaskUiState(
     val timeSpent: Long = 0L,
     val timeGoal: Long = 0L,
     val clickTimes: Int = 0,
+    val isRoutine: Boolean = true,
+    val dayGoal: Int = -1,
     val startingTime: Long = 0L,
     val endingTime: Long = 0L
 )
@@ -21,6 +23,8 @@ fun TaskUiState.toTask(): Task {
         timeSpent = timeSpent,
         timeGoal = timeGoal,
         clickTimes = clickTimes,
+        isRoutine = isRoutine,
+        dayGoal = dayGoal,
         startingTime = startingTime,
         endingTime = endingTime
     )
@@ -34,6 +38,8 @@ fun Task.toTaskUiState(): TaskUiState {
         timeSpent = timeSpent,
         timeGoal = timeGoal,
         clickTimes = clickTimes,
+        isRoutine = isRoutine,
+        dayGoal = dayGoal,
         startingTime = startingTime,
         endingTime = endingTime
     )

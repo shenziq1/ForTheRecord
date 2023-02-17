@@ -1,4 +1,4 @@
-package com.github.shenziq1.fortherecord.ui.screen.routine
+package com.github.shenziq1.fortherecord.ui.screen.today
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
@@ -19,12 +19,13 @@ import com.github.shenziq1.fortherecord.ui.theme.Blue300
 import com.github.shenziq1.fortherecord.ui.theme.Blue400
 
 import com.github.shenziq1.fortherecord.ui.viewmodel.task.RoutineNewViewModel
+import com.github.shenziq1.fortherecord.ui.viewmodel.task.TodayNewViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun RoutineNewScreen(
+fun TodayNewScreen(
     navHostController: NavHostController,
-    viewModel: RoutineNewViewModel = hiltViewModel()
+    viewModel: TodayNewViewModel = hiltViewModel()
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     var name by remember {

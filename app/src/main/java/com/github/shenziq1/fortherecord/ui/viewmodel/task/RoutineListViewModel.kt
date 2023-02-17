@@ -12,19 +12,16 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-data class TaskMapUiState(val taskMap: Map<String, List<Task>> = mapOf())
-
 @HiltViewModel
-class TaskListViewModel @Inject constructor(private val offlineRepository: OfflineRepository) :
+class RoutineListViewModel @Inject constructor(private val offlineRepository: OfflineRepository) :
     ViewModel() {
-val taskMapUiState: StateFlow<TaskMapUiState> = offlineRepository.getAllTasksReversed().map {
-    TaskMapUiState(it.groupBy { it.category })
-}.stateIn(
-    scope = viewModelScope,
-    started = SharingStarted.WhileSubscribed(5000L),
-    initialValue = TaskMapUiState()
-)
-
+    val routineMapUiState: StateFlow<TaskMapUiState> = offlineRepository.getAllRoutineReversed().map { tasks ->
+        TaskMapUiState(tasks.groupBy { it.category })
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000L),
+        initialValue = TaskMapUiState()
+    )
     fun deleteTask(task: Task){
         viewModelScope.launch {
             offlineRepository.delete(task)

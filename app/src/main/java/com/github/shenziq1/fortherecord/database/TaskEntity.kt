@@ -14,6 +14,8 @@ data class Task(
     val timeSpent: Long,
     val timeGoal: Long,
     val clickTimes: Int,
+    val isRoutine: Boolean,
+    val dayGoal: Int,
     val startingTime: Long,
     val endingTime: Long
 

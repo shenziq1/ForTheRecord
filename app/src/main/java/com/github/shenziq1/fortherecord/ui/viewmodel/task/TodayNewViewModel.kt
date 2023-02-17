@@ -1,6 +1,5 @@
 package com.github.shenziq1.fortherecord.ui.viewmodel.task
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -12,11 +11,19 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class TaskNewViewModel @Inject constructor(
+class TodayNewViewModel @Inject constructor(
     private val offlineRepository: OfflineRepository
 ) : ViewModel() {
 
     var taskUiState: TaskUiState by mutableStateOf(TaskUiState())
+
+    private fun setTaskToToday(){
+        taskUiState = taskUiState.copy(isRoutine = !taskUiState.isRoutine)
+    }
+
+    init {
+        setTaskToToday()
+    }
 
     fun setNewTaskName(name: String){
         taskUiState = taskUiState.copy(name = name)

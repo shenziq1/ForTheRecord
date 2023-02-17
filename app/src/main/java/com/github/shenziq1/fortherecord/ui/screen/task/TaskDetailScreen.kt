@@ -1,6 +1,5 @@
-package com.github.shenziq1.fortherecord.ui.screen.routine
+package com.github.shenziq1.fortherecord.ui.screen.task
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
@@ -10,18 +9,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.ui.common.TopBackBar
-import com.github.shenziq1.fortherecord.ui.theme.Green100
 import com.github.shenziq1.fortherecord.ui.viewmodel.task.TaskDetailViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
 @Composable
-fun RoutineDetailScreen(
+fun TaskDetailScreen(
     onBackClicked: () -> Unit,
     viewModel: TaskDetailViewModel = hiltViewModel()
 ) {

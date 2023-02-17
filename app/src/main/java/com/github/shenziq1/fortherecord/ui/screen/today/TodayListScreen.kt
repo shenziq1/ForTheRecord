@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalFoundationApi::class)
 
-package com.github.shenziq1.fortherecord.ui.screen.routine
+package com.github.shenziq1.fortherecord.ui.screen.today
 
 import android.util.Log
 import androidx.compose.foundation.*
@@ -19,15 +19,15 @@ import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.database.Task
 import com.github.shenziq1.fortherecord.ui.screen.task.SwipableTaskCard
 import com.github.shenziq1.fortherecord.ui.common.Title
-import com.github.shenziq1.fortherecord.ui.viewmodel.task.RoutineListViewModel
+import com.github.shenziq1.fortherecord.ui.viewmodel.task.TodayListViewModel
 
 @Composable
-fun RoutineListScreen(
+fun TodayListScreen(
     onNewClicked: () -> Unit,
     navHostController: NavHostController,
-    viewModel: RoutineListViewModel = hiltViewModel()
+    viewModel: TodayListViewModel = hiltViewModel()
 ) {
-    val taskListUiState by viewModel.routineMapUiState.collectAsState()
+    val taskListUiState by viewModel.todayMapUiState.collectAsState()
 
     Scaffold(
         topBar = {
@@ -38,7 +38,7 @@ fun RoutineListScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Title(text = "Routine")
+                        Title(text = "Today")
                         FloatingActionButton(
                             onClick = { onNewClicked() },
                             modifier = Modifier.size(36.dp)

@@ -1,6 +1,5 @@
-package com.github.shenziq1.fortherecord.ui.main
+package com.github.shenziq1.fortherecord.ui.navigation
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -17,16 +16,16 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.github.shenziq1.fortherecord.ui.screen.insights.InsightsScreen
-import com.github.shenziq1.fortherecord.ui.screen.routine.RoutineDetailScreen
-import com.github.shenziq1.fortherecord.ui.screen.routine.RoutineEditScreen
 import com.github.shenziq1.fortherecord.ui.screen.routine.RoutineListScreen
 import com.github.shenziq1.fortherecord.ui.screen.routine.RoutineNewScreen
 import com.github.shenziq1.fortherecord.ui.screen.settings.SettingsScreen
-import com.github.shenziq1.fortherecord.ui.screen.today.GoalListScreen
+import com.github.shenziq1.fortherecord.ui.screen.task.TaskDetailScreen
+import com.github.shenziq1.fortherecord.ui.screen.task.TaskEditScreen
+import com.github.shenziq1.fortherecord.ui.screen.today.TodayListScreen
+import com.github.shenziq1.fortherecord.ui.screen.today.TodayNewScreen
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun MainScreen(navHostController: NavHostController) {
+fun Navigation(navHostController: NavHostController) {
     val items = listOf(
         "RoutineHome",
         "TodayHome",
@@ -61,7 +60,7 @@ fun MainScreen(navHostController: NavHostController) {
                             type = NavType.IntType
                         }),
                     ) {
-                        RoutineDetailScreen(onBackClicked = {navHostController.popBackStack()})
+                        TaskDetailScreen(onBackClicked = {navHostController.popBackStack()})
                     }
                     composable(
                         route = "RoutineEdit/{taskId}",
@@ -69,14 +68,34 @@ fun MainScreen(navHostController: NavHostController) {
                             type = NavType.IntType
                         })
                     ) {
-                        RoutineEditScreen(onBackClicked = {navHostController.popBackStack()})
+                        TaskEditScreen(onBackClicked = {navHostController.popBackStack()})
                     }
 
                 }
                 navigation(startDestination = "TodayHome", route = "Today") {
                     composable("TodayHome") {
-                        GoalListScreen(navHostController = navHostController)
+                        TodayListScreen(onNewClicked = {navHostController.navigate("TodayNew")}, navHostController = navHostController)
                     }
+                    composable("TodayNew") {
+                        TodayNewScreen(navHostController = navHostController)
+                    }
+                    composable(
+                        route = "TodayDetail/{taskId}",
+                        arguments = listOf(navArgument("taskId") {
+                            type = NavType.IntType
+                        }),
+                    ) {
+                        TaskDetailScreen(onBackClicked = {navHostController.popBackStack()})
+                    }
+                    composable(
+                        route = "TodayEdit/{taskId}",
+                        arguments = listOf(navArgument("taskId") {
+                            type = NavType.IntType
+                        })
+                    ) {
+                        TaskEditScreen(onBackClicked = {navHostController.popBackStack()})
+                    }
+
                 }
                 navigation(startDestination = "InsightsHome", route = "Insights") {
                     composable("InsightsHome") {
