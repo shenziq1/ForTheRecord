@@ -13,7 +13,6 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.github.shenziq1.fortherecord.ui.common.TopBackBar
 import com.github.shenziq1.fortherecord.ui.theme.Blue300
 import com.github.shenziq1.fortherecord.ui.theme.Blue400
@@ -23,7 +22,7 @@ import com.github.shenziq1.fortherecord.ui.viewmodel.routine.RoutineNewViewModel
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RoutineNewScreen(
-    navHostController: NavHostController,
+    onBackClicked: () -> Unit,
     viewModel: RoutineNewViewModel = hiltViewModel()
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -40,7 +39,7 @@ fun RoutineNewScreen(
 
     Scaffold(
         topBar = {
-            TopBackBar(onClick = {navHostController.popBackStack()})
+            TopBackBar(onClick = { onBackClicked() })
         }) { paddingValues ->
         Column(
             modifier = Modifier.fillMaxSize().padding(paddingValues),
@@ -110,13 +109,12 @@ fun RoutineNewScreen(
             Spacer(modifier = Modifier.height(40.dp))
             Button(onClick = {
                 viewModel.saveNewTask()
-                navHostController.popBackStack()
+                onBackClicked()
             }) {
                 Text(text = "save")
             }
         }
     }
-
 }
 
 

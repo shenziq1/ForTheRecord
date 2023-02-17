@@ -21,7 +21,6 @@ import com.github.shenziq1.fortherecord.ui.viewmodel.insights.InsightsViewModel
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun InsightsScreen(
-    navHostController: NavHostController,
     viewModel: InsightsViewModel = hiltViewModel()
 ) {
 

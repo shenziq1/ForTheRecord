@@ -49,10 +49,10 @@ fun Navigation(navHostController: NavHostController) {
             NavHost(navController =  navHostController, startDestination = "Routine") {
                 navigation(startDestination = "RoutineHome", route = "Routine") {
                     composable("RoutineHome") {
-                        RoutineListScreen(onNewClicked = {navHostController.navigate("RoutineNew")}, navHostController = navHostController)
+                        RoutineListScreen(navigateTo = {destination -> navHostController.navigate(destination)})
                     }
                     composable("RoutineNew") {
-                        RoutineNewScreen(navHostController = navHostController)
+                        RoutineNewScreen(onBackClicked = {navHostController.popBackStack()})
                     }
                     composable(
                         route = "RoutineDetail/{taskId}",
@@ -74,10 +74,10 @@ fun Navigation(navHostController: NavHostController) {
                 }
                 navigation(startDestination = "TodayHome", route = "Today") {
                     composable("TodayHome") {
-                        TodayListScreen(onNewClicked = {navHostController.navigate("TodayNew")}, navHostController = navHostController)
+                        TodayListScreen(navigateTo = {destination -> navHostController.navigate(destination)})
                     }
                     composable("TodayNew") {
-                        TodayNewScreen(navHostController = navHostController)
+                        TodayNewScreen(onBackClicked = {navHostController.popBackStack()})
                     }
                     composable(
                         route = "TodayDetail/{taskId}",
@@ -99,7 +99,7 @@ fun Navigation(navHostController: NavHostController) {
                 }
                 navigation(startDestination = "InsightsHome", route = "Insights") {
                     composable("InsightsHome") {
-                        InsightsScreen(navHostController = navHostController)
+                        InsightsScreen()
                     }
                 }
                 navigation(startDestination = "SettingsHome", route = "Settings") {

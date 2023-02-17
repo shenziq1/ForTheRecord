@@ -23,8 +23,7 @@ import com.github.shenziq1.fortherecord.ui.viewmodel.routine.RoutineListViewMode
 
 @Composable
 fun RoutineListScreen(
-    onNewClicked: () -> Unit,
-    navHostController: NavHostController,
+    navigateTo: (String) -> Unit,
     viewModel: RoutineListViewModel = hiltViewModel()
 ) {
     val taskListUiState by viewModel.routineMapUiState.collectAsState()
@@ -40,7 +39,7 @@ fun RoutineListScreen(
                     ) {
                         Title(text = "Routine")
                         FloatingActionButton(
-                            onClick = { onNewClicked() },
+                            onClick = { navigateTo("RoutineNew") },
                             modifier = Modifier.size(36.dp)
                         ) {
                             Icon(
@@ -71,8 +70,8 @@ fun RoutineListScreen(
                         items(items = tasks, key = { task: Task -> task.id }) {
                             SwipableTaskCard(
                                 task = it,
-                                { navHostController.navigate("RoutineEdit/${it.id}") },
-                                { navHostController.navigate("RoutineDetail/${it.id}")}
+                                { navigateTo("RoutineEdit/${it.id}") },
+                                { navigateTo("RoutineDetail/${it.id}")}
                             )
                         }
                     }

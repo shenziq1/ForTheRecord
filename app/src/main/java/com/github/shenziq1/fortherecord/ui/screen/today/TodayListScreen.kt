@@ -23,8 +23,7 @@ import com.github.shenziq1.fortherecord.ui.viewmodel.today.TodayListViewModel
 
 @Composable
 fun TodayListScreen(
-    onNewClicked: () -> Unit,
-    navHostController: NavHostController,
+    navigateTo: (String) -> Unit,
     viewModel: TodayListViewModel = hiltViewModel()
 ) {
     val taskListUiState by viewModel.todayMapUiState.collectAsState()
@@ -40,7 +39,7 @@ fun TodayListScreen(
                     ) {
                         Title(text = "Today")
                         FloatingActionButton(
-                            onClick = { onNewClicked() },
+                            onClick = { navigateTo("TodayNew") },
                             modifier = Modifier.size(36.dp)
                         ) {
                             Icon(
@@ -71,8 +70,8 @@ fun TodayListScreen(
                         items(items = tasks, key = { task: Task -> task.id }) {
                             SwipableTaskCard(
                                 task = it,
-                                { navHostController.navigate("RoutineEdit/${it.id}") },
-                                { navHostController.navigate("RoutineDetail/${it.id}")}
+                                { navigateTo("RoutineEdit/${it.id}") },
+                                { navigateTo("RoutineDetail/${it.id}")}
                             )
                         }
                     }
