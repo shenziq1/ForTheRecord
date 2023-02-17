@@ -24,6 +24,7 @@ import kotlin.math.max
 @Composable
 fun SwipableTaskCard(
     task: Task,
+    onDeleteSwiped: () -> Unit,
     onEditSwiped: () -> Unit,
     onCardClicked: () -> Unit,
     viewModel: TaskListViewModel = hiltViewModel()
@@ -35,6 +36,7 @@ fun SwipableTaskCard(
             when (it) {
                 DismissValue.DismissedToEnd -> {
                     viewModel.deleteTask(currentTask)
+                    onDeleteSwiped()
                     true
                 }
                 DismissValue.DismissedToStart -> {

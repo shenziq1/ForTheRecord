@@ -1,13 +1,9 @@
 package com.github.shenziq1.fortherecord.ui.navigation
 
-import android.util.Log
-import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -17,7 +13,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.github.shenziq1.fortherecord.ui.screen.insights.InsightsScreen
-import com.github.shenziq1.fortherecord.ui.screen.routine.TaskListScreen
+import com.github.shenziq1.fortherecord.ui.screen.task.TaskListScreen
 import com.github.shenziq1.fortherecord.ui.screen.routine.RoutineNewScreen
 import com.github.shenziq1.fortherecord.ui.screen.settings.SettingsScreen
 import com.github.shenziq1.fortherecord.ui.screen.task.TaskDetailScreen
@@ -31,8 +27,7 @@ fun Navigation(navHostController: NavHostController) {
             composable("RoutineHome") {
                 TaskListScreen(
                     destination = "Routine",
-                    navigateTo = { destination -> navHostController.navigate(destination) },
-                    navHostController
+                    navHostController = navHostController
                 )
             }
             composable("RoutineNew") {
@@ -60,7 +55,6 @@ fun Navigation(navHostController: NavHostController) {
             composable("TodayHome") {
                 TaskListScreen(
                     destination = "Today",
-                    navigateTo = { destination -> navHostController.navigate(destination) },
                     navHostController = navHostController
                 )
             }
@@ -112,7 +106,6 @@ fun BottomNavigationBar(navHostController: NavHostController) {
 
     BottomNavigation() {
         items.forEach { item ->
-
             BottomNavigationItem(
                 selected = currentDestination?.hierarchy?.any() { it.route == item.first } == true,
                 onClick = { navHostController.navigate(item.first) },

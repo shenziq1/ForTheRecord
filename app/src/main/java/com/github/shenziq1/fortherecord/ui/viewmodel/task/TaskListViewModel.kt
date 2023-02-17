@@ -42,4 +42,10 @@ class TaskListViewModel @Inject constructor(private val offlineRepository: Offli
             offlineRepository.update(task)
         }
     }
+
+    fun addTask(task: Task){
+        viewModelScope.launch {
+            offlineRepository.insert(task)
+        }
+    }
 }
