@@ -23,7 +23,7 @@ import com.github.shenziq1.fortherecord.ui.viewmodel.task.TaskEditViewModel
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun RoutineEditScreen(
-    navHostController: NavHostController,
+    onBackClicked: () -> Unit,
     viewModel: TaskEditViewModel = hiltViewModel()
 ) {
     val focusManager = LocalFocusManager.current
@@ -38,13 +38,10 @@ fun RoutineEditScreen(
     }
 
     Scaffold(
-        topBar = { TopBackBar(onClick = { navHostController.popBackStack() }) },
-//        bottomBar = { BottomAppBar() {
-//            Spacer(modifier = Modifier.height(56.dp))
-//        } }
-    ) {
+        topBar = { TopBackBar(onClick = {onBackClicked()}) },
+    ) {paddingValues ->
         Column(
-            modifier = Modifier.fillMaxSize().padding(it),
+            modifier = Modifier.fillMaxSize().padding(paddingValues),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -57,11 +54,6 @@ fun RoutineEditScreen(
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Ascii,
                     imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-//                    onNext = {
-//                        keyboardController?.hide()
-//                    }
                 ),
                 onValueChange = {
                     name = it
@@ -95,10 +87,10 @@ fun RoutineEditScreen(
             )
             Spacer(modifier = Modifier.height(40.dp))
             Button(onClick = {
-                viewModel.setNewTaskName(name = name)
-                viewModel.setNewTaskGoal(timeGoal = timeGoal.toLong() * 1000)
-                //focusManager.moveFocus(FocusDirection.Down)
-                navHostController.popBackStack()
+                viewModel.editTask(name = name, timeGoal = timeGoal.toLong() * 1000)
+                //viewModel.setNewTaskName(name = name)
+                //viewModel.setNewTaskGoal(timeGoal = timeGoal.toLong() * 1000)
+                onBackClicked()
             }) {
                 Text(text = "save")
             }

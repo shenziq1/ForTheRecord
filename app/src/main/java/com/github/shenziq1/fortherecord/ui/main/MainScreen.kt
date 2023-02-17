@@ -1,7 +1,6 @@
 package com.github.shenziq1.fortherecord.ui.main
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -24,8 +23,6 @@ import com.github.shenziq1.fortherecord.ui.screen.routine.RoutineListScreen
 import com.github.shenziq1.fortherecord.ui.screen.routine.RoutineNewScreen
 import com.github.shenziq1.fortherecord.ui.screen.settings.SettingsScreen
 import com.github.shenziq1.fortherecord.ui.screen.today.GoalListScreen
-import com.github.shenziq1.fortherecord.ui.theme.Blue50
-import com.google.accompanist.navigation.animation.AnimatedNavHost
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -53,7 +50,7 @@ fun MainScreen(navHostController: NavHostController) {
             NavHost(navController =  navHostController, startDestination = "Routine") {
                 navigation(startDestination = "RoutineHome", route = "Routine") {
                     composable("RoutineHome") {
-                        RoutineListScreen(navHostController = navHostController)
+                        RoutineListScreen(onNewClicked = {navHostController.navigate("RoutineNew")}, navHostController = navHostController)
                     }
                     composable("RoutineNew") {
                         RoutineNewScreen(navHostController = navHostController)
@@ -64,7 +61,7 @@ fun MainScreen(navHostController: NavHostController) {
                             type = NavType.IntType
                         }),
                     ) {
-                        RoutineDetailScreen(navHostController = navHostController)
+                        RoutineDetailScreen(onBackClicked = {navHostController.popBackStack()})
                     }
                     composable(
                         route = "RoutineEdit/{taskId}",
@@ -72,7 +69,7 @@ fun MainScreen(navHostController: NavHostController) {
                             type = NavType.IntType
                         })
                     ) {
-                        RoutineEditScreen(navHostController = navHostController)
+                        RoutineEditScreen(onBackClicked = {navHostController.popBackStack()})
                     }
 
                 }

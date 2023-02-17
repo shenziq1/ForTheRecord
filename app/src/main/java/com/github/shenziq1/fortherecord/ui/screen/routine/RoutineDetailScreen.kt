@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun RoutineDetailScreen(
-    navHostController: NavHostController,
+    onBackClicked: () -> Unit,
     viewModel: TaskDetailViewModel = hiltViewModel()
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -43,10 +43,10 @@ fun RoutineDetailScreen(
                 true -> {
                     isRunning = false
                     viewModel.addTaskTimeSpent(timeSpent)
-                    navHostController.popBackStack()
+                    onBackClicked()
                 }
                 false -> {
-                    navHostController.popBackStack()
+                    onBackClicked()
                 }
             }
         })

@@ -19,8 +19,6 @@ class TaskEditViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val taskId = savedStateHandle.get<Int>("taskId")?:0
-//    var taskUiState: TaskUiState by mutableStateOf(TaskUiState())
-//        private set
 
     var taskUiState: StateFlow<TaskUiState> =
         offlineRepository.getTask(taskId).filterNotNull().map {
@@ -31,25 +29,18 @@ class TaskEditViewModel @Inject constructor(
             initialValue = TaskUiState()
         )
 
-//    private suspend fun getUiState(id: Int) {
-//        val task = offlineRepository.getTask(id).filterNotNull().first()
-//        taskUiState = task.toTaskUiState()
-//
-//    }
-
-//    init {
-//        viewModelScope.launch {
-//            getUiState(taskId)
-//        }
-//    }
+    fun editTask(name: String, timeGoal: Long){
+        val task = taskUiState.value.toTask().copy(name = name, timeGoal = timeGoal)
+        viewModelScope.launch {
+            offlineRepository.update(task)
+        }
+    }
 
     fun setNewTaskName(name: String){
         val task = taskUiState.value.toTask().copy(name = name)
         viewModelScope.launch {
             offlineRepository.update(task)
         }
-
-
     }
 
     fun setNewTaskGoal(timeGoal: Long){
@@ -58,11 +49,5 @@ class TaskEditViewModel @Inject constructor(
             offlineRepository.update(task)
         }
     }
-
-//    fun saveEditedTask() {
-//        viewModelScope.launch {
-//            offlineRepository.update(taskUiState.toTask())
-//        }
-//    }
 }
 

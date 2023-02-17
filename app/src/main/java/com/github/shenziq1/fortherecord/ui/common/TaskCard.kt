@@ -31,7 +31,8 @@ import kotlin.math.roundToInt
 @Composable
 fun SwipableTaskCard(
     task: Task,
-    navHostController: NavHostController,
+    onEditSwiped: () -> Unit,
+    onCardClicked: () -> Unit,
     viewModel: TaskListViewModel = hiltViewModel()
 ) {
     val currentTask by rememberUpdatedState(newValue = task)
@@ -45,7 +46,7 @@ fun SwipableTaskCard(
                     true
                 }
                 DismissValue.DismissedToStart -> {
-                    navHostController.navigate("RoutineEdit/${currentTask.id}")
+                    onEditSwiped()
                     false
                 }
                 else -> {false}
@@ -115,7 +116,7 @@ fun SwipableTaskCard(
     ) {
         Card(
             onClick = {
-                navHostController.navigate(route)
+                onCardClicked()
                 viewModel.updateTask(currentTask.copy(clickTimes = currentTask.clickTimes + 1))
             },
             modifier = Modifier

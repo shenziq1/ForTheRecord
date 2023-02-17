@@ -27,7 +27,6 @@ fun RoutineNewScreen(
     navHostController: NavHostController,
     viewModel: TaskNewViewModel = hiltViewModel()
 ) {
-    val coroutineScope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
     var name by remember {
         mutableStateOf("")
@@ -43,9 +42,9 @@ fun RoutineNewScreen(
     Scaffold(
         topBar = {
             TopBackBar(onClick = {navHostController.popBackStack()})
-        }) {
+        }) { paddingValues ->
         Column(
-            modifier = Modifier.fillMaxSize().padding(it),
+            modifier = Modifier.fillMaxSize().padding(paddingValues),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -57,11 +56,6 @@ fun RoutineNewScreen(
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Ascii,
                     imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-//                    onNext = {
-//                        keyboardController?.hide()
-//                    }
                 ),
                 onValueChange = {
                     name = it
@@ -80,11 +74,6 @@ fun RoutineNewScreen(
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next
-                ),
-                keyboardActions = KeyboardActions(
-//                    onNext = {
-//                        keyboardController?.hide()
-//                    }
                 ),
 
                 onValueChange = {
